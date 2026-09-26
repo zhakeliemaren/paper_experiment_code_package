@@ -1,0 +1,662 @@
+{
+  "samples": 2153,
+  "train_samples": 1732,
+  "test_samples": 421,
+  "train_test_split_scope": "trajectory",
+  "benchmark": "paper_d1",
+  "certificate_scope": "robust_sos_on_empirical_diffusion_moment_abstraction",
+  "learned_abstraction_global_bounds": false,
+  "terminal_sde_calibration": "off",
+  "terminal_pac_calibration": null,
+  "real_system_distribution_certified": false,
+  "real_system_distribution_gap": "No bound currently relates the fitted stochastic-increment distribution to the unknown real distribution.",
+  "physical_model": "diffusion_reverse_polynomial_covariance_sde",
+  "diffusion_physical_role": "diffusion_only",
+  "diffusion_latent_dimension": 1,
+  "physical_stochastic_state_indices": [
+    1
+  ],
+  "diffusion_symmetrize_increments": true,
+  "nominal_drift_preserved": true,
+  "diffusion_moment_method": "reverse_polynomial",
+  "reverse_moment_diagnostics": {
+    "method": "reverse_polynomial",
+    "terminal_sampling_used": false,
+    "polynomial_degree": 2,
+    "fit_node_count": 3,
+    "validation_node_count": 3,
+    "fit_radius": 2.0,
+    "validation_radius": 3.0,
+    "validation_margin": 1.25,
+    "max_step_noise_fit_error": 1.132038180090248,
+    "mean_step_noise_fit_error": 0.7623831683365709,
+    "normalized_terminal_update_error_indicator": 16.440090803104187,
+    "physical_drift_validation_error": 2.1581985977179374,
+    "validation_error_is_formal_bound": false,
+    "gaussian_moment_closure": true,
+    "moment_closure_error_certified": false,
+    "max_quadratic_covariance_fraction": 0.18886436771796705,
+    "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+    "latent_diffusion_dimension": 1,
+    "physical_state_dimension": 2,
+    "physical_stochastic_state_indices": [
+      1
+    ]
+  },
+  "reverse_surrogate_drift_error_margin": 0.0,
+  "encoder": "stats",
+  "context_dim": 2,
+  "context_mlp_hidden": [
+    32
+  ],
+  "context_mlp_max_iter": 250,
+  "diffusion_noise_mse": 0.4812715474800385,
+  "diffusion_n_iter": 48,
+  "diffusion_training_examples": 27712,
+  "diffusion_schedule": "cosine",
+  "diffusion_terminal_alpha_bar": 0.002649395511284702,
+  "diffusion_train_copies": 8,
+  "diffusion_early_stopping": true,
+  "residual_mean_mae": 0.005930247398675997,
+  "stochastic_increment_mean_mae": 0.005930247398675997,
+  "learned_increment_mean_norm": 0.0015833654993351925,
+  "score_residual_samples": 32,
+  "score_context_bound_samples": 1,
+  "score_poly_samples": 89,
+  "context_certification": "empirical",
+  "context_set": {
+    "mode": "empirical_training_support",
+    "lower": [
+      -2.6453059189321286,
+      -6.0
+    ],
+    "upper": [
+      3.438631162668531,
+      6.0
+    ],
+    "center": [
+      -0.04353071015193321,
+      -0.17014985499409738
+    ],
+    "coverage_points": [
+      [
+        -0.04353071015193321,
+        -0.17014985499409738
+      ]
+    ],
+    "coverage_count": 1,
+    "margin_fraction": 0.0,
+    "coverage_radius": 6.691253404943139
+  },
+  "context_reference_min": [
+    -0.04353071015193321,
+    -0.17014985499409738
+  ],
+  "context_reference_max": [
+    -0.04353071015193321,
+    -0.17014985499409738
+  ],
+  "context_lipschitz_estimate": 0.0,
+  "context_lipschitz_empirical": 0.0,
+  "context_error_margin_empirical": 0.0,
+  "context_certification_report": {
+    "method": "not_applicable_to_fixed_nominal_drift",
+    "target": "residual_drift",
+    "drift_error_margin": 0.0,
+    "scope": "diffusion_only_physical_sde"
+  },
+  "context_error_margin_source": "not_applicable_to_fixed_nominal_drift",
+  "context_error_margin": 0.0,
+  "context_error_margin_applied_to_abstraction": 0.0,
+  "polynomial_degree": 2,
+  "polynomial_terms": 6,
+  "polynomial_source": "diffusion_reverse_polynomial_covariance_sde",
+  "abstraction_method": "partitioned_grid_least_squares_with_empirical_envelopes",
+  "abstraction_partitions": 1,
+  "abstraction_validation_grid": 2,
+  "abstraction_error_bound_mode": "validation",
+  "abstraction_error_lipschitz_margin": 1.25,
+  "diffusion_bound_mode": "sample",
+  "diffusion_confidence_delta": 0.05,
+  "sampler_covariance_certification": {
+    "method": "analytic_reverse_sampler_second_moment",
+    "scope": "all_condition_inputs_for_the_fitted_tanh_sampler",
+    "model_target": "learned_terminal_residual_sampler_not_real_system_distribution",
+    "noise_predictor_l2_bound": 9.77243970610514,
+    "noise_predictor_residual_lipschitz": 3.850614200279388,
+    "normalized_root_second_moment_bound": 390.2833668020287,
+    "residual_scale_operator_norm": 0.006563828094278015,
+    "physical_root_second_moment_bound": 2.5617529277445676,
+    "second_moment_covariance_eigenvalue_bound": 131.25156125615726,
+    "gaussian_input_lipschitz_bound": 235841769.18444303,
+    "gaussian_poincare_covariance_eigenvalue_bound": 47927617509279.625,
+    "physical_sde_covariance_eigenvalue_bound": 131.25156125615726,
+    "reverse_steps": [
+      {
+        "t_index": 31,
+        "state_gain": 1.414213562373095,
+        "noise_predictor_gain": 0.7080453493435834,
+        "posterior_std": 0.7061669655774921,
+        "root_second_moment": 9.039711013598906,
+        "state_jacobian_bound": 4.140623038997277,
+        "gaussian_input_lipschitz": 4.200408424706813
+      },
+      {
+        "t_index": 30,
+        "state_gain": 1.414213562373095,
+        "noise_predictor_gain": 0.7089876648350594,
+        "posterior_std": 0.705220881080339,
+        "root_second_moment": 20.417842003418247,
+        "state_jacobian_bound": 4.144251532409898,
+        "gaussian_input_lipschitz": 17.421828275139944
+      },
+      {
+        "t_index": 29,
+        "state_gain": 1.414213562373095,
+        "noise_predictor_gain": 0.7108836380659777,
+        "posterior_std": 0.703309642426492,
+        "root_second_moment": 36.52556620910806,
+        "state_jacobian_bound": 4.151552193856221,
+        "gaussian_input_lipschitz": 72.33104878675098
+      },
+      {
+        "t_index": 28,
+        "state_gain": 1.3296421779324374,
+        "noise_predictor_gain": 0.583779928738982,
+        "posterior_std": 0.6535666118602023,
+        "root_second_moment": 54.92445417159013,
+        "state_jacobian_bound": 3.5775534613728506,
+        "gaussian_input_lipschitz": 258.7690193017254
+      },
+      {
+        "t_index": 27,
+        "state_gain": 1.245546953865115,
+        "noise_predictor_gain": 0.4512216104066849,
+        "posterior_std": 0.5897340693776003,
+        "root_second_moment": 73.41025663729678,
+        "state_jacobian_bound": 2.9830272943700296,
+        "gaussian_input_lipschitz": 771.9152727893453
+      },
+      {
+        "t_index": 26,
+        "state_gain": 1.1947688540349801,
+        "noise_predictor_gain": 0.3686631523905878,
+        "posterior_std": 0.539963049329761,
+        "root_second_moment": 91.85098967488629,
+        "state_jacobian_bound": 2.6143484237499415,
+        "gaussian_input_lipschitz": 2018.0555489232086
+      },
+      {
+        "t_index": 25,
+        "state_gain": 1.1606470135390057,
+        "noise_predictor_gain": 0.31229703580797086,
+        "posterior_std": 0.49957186816570054,
+        "root_second_moment": 110.15805267775328,
+        "state_jacobian_bound": 2.3631824143263387,
+        "gaussian_input_lipschitz": 4769.033410514907
+      },
+      {
+        "t_index": 24,
+        "state_gain": 1.1360405955193869,
+        "noise_predictor_gain": 0.27140998712704073,
+        "posterior_std": 0.46575192276118715,
+        "root_second_moment": 128.2621094228858,
+        "state_jacobian_bound": 2.1811357460484158,
+        "gaussian_input_lipschitz": 10401.909256200415
+      },
+      {
+        "t_index": 23,
+        "state_gain": 1.1173787586592954,
+        "noise_predictor_gain": 0.24044724632661865,
+        "posterior_std": 0.4367154817921322,
+        "root_second_moment": 146.10382830898487,
+        "state_jacobian_bound": 2.0432483397826493,
+        "gaussian_input_lipschitz": 21253.683822788033
+      },
+      {
+        "t_index": 22,
+        "state_gain": 1.1026773101710254,
+        "noise_predictor_gain": 0.21623493524192908,
+        "posterior_std": 0.4112659761601082,
+        "root_second_moment": 163.62978524860617,
+        "state_jacobian_bound": 1.9353146224100914,
+        "gaussian_input_lipschitz": 41132.565084378526
+      },
+      {
+        "t_index": 21,
+        "state_gain": 1.0907453642266207,
+        "noise_predictor_gain": 0.196825669635059,
+        "posterior_std": 0.3885680189549495,
+        "root_second_moment": 180.79046471739198,
+        "state_jacobian_bound": 1.8486450827028784,
+        "gaussian_input_lipschitz": 76039.51418318527
+      },
+      {
+        "t_index": 20,
+        "state_gain": 1.0808247294141304,
+        "noise_predictor_gain": 0.18095741190254483,
+        "posterior_std": 0.3680169979643073,
+        "root_second_moment": 197.53921750398484,
+        "state_jacobian_bound": 1.777621909331876,
+        "gaussian_input_lipschitz": 135169.50638748304
+      },
+      {
+        "t_index": 19,
+        "state_gain": 1.072409599705934,
+        "noise_predictor_gain": 0.1677759346958055,
+        "posterior_std": 0.34916125970443823,
+        "root_second_moment": 213.83169463532641,
+        "state_jacobian_bound": 1.71844999631075,
+        "gaussian_input_lipschitz": 232282.03775315857
+      },
+      {
+        "t_index": 18,
+        "state_gain": 1.0651494621595308,
+        "noise_predictor_gain": 0.15668214744185113,
+        "posterior_std": 0.33165355630800575,
+        "root_second_moment": 229.6255349286855,
+        "state_jacobian_bound": 1.6684719640293915,
+        "gaussian_input_lipschitz": 387556.0677389036
+      },
+      {
+        "t_index": 17,
+        "state_gain": 1.0587936126840434,
+        "noise_predictor_gain": 0.14724323195878905,
+        "posterior_std": 0.3152195185943569,
+        "root_second_moment": 244.88019481669258,
+        "state_jacobian_bound": 1.6257704925595884,
+        "gaussian_input_lipschitz": 630077.2191424133
+      },
+      {
+        "t_index": 16,
+        "state_gain": 1.0531578624436948,
+        "noise_predictor_gain": 0.13913844251302238,
+        "posterior_std": 0.29963640807155406,
+        "root_second_moment": 259.55686097627495,
+        "state_jacobian_bound": 1.588926324989096,
+        "gaussian_input_lipschitz": 1001146.2802713489
+      },
+      {
+        "t_index": 15,
+        "state_gain": 1.0481037261278259,
+        "noise_predictor_gain": 0.13212470498226728,
+        "posterior_std": 0.2847182520604913,
+        "root_second_moment": 273.61841209646246,
+        "state_jacobian_bound": 1.556864991340269,
+        "gaussian_input_lipschitz": 1558649.5949650223
+      },
+      {
+        "t_index": 14,
+        "state_gain": 1.0435249520880026,
+        "noise_predictor_gain": 0.12601400001184193,
+        "posterior_std": 0.2703050081505772,
+        "root_second_moment": 287.02940959874775,
+        "state_jacobian_bound": 1.528756249967608,
+        "gaussian_input_lipschitz": 2382795.309812274
+      },
+      {
+        "t_index": 13,
+        "state_gain": 1.0393385387172844,
+        "noise_predictor_gain": 0.12065799393734065,
+        "posterior_std": 0.25625426154894787,
+        "root_second_moment": 299.75610437360865,
+        "state_jacobian_bound": 1.5039459235496326,
+        "gaussian_input_lipschitz": 3583595.2928453623
+      },
+      {
+        "t_index": 12,
+        "state_gain": 1.0354785837364744,
+        "noise_predictor_gain": 0.11593723009603672,
+        "posterior_std": 0.2424344366102998,
+        "root_second_moment": 311.76645045056375,
+        "state_jacobian_bound": 1.4819081282853321,
+        "gaussian_input_lipschitz": 5310558.992952603
+      },
+      {
+        "t_index": 11,
+        "state_gain": 1.0318919742967365,
+        "noise_predictor_gain": 0.11175320584230458,
+        "posterior_std": 0.22871875218701346,
+        "root_second_moment": 323.03011829316284,
+        "state_jacobian_bound": 1.46221045563986,
+        "gaussian_input_lipschitz": 7765154.884787586
+      },
+      {
+        "t_index": 10,
+        "state_gain": 1.0285353036446563,
+        "noise_predictor_gain": 0.10802221365511624,
+        "posterior_std": 0.21497923667287866,
+        "root_second_moment": 333.518500611565,
+        "state_jacobian_bound": 1.444487173490661,
+        "gaussian_input_lipschitz": 11216666.63124402
+      },
+      {
+        "t_index": 9,
+        "state_gain": 1.0253726233424945,
+        "noise_predictor_gain": 0.10467009344963868,
+        "posterior_std": 0.201080054300552,
+        "root_second_moment": 343.20470213690527,
+        "state_jacobian_bound": 1.4284167715242437,
+        "gaussian_input_lipschitz": 16022074.7366653
+      },
+      {
+        "t_index": 8,
+        "state_gain": 1.0223737759013014,
+        "noise_predictor_gain": 0.10162708574150306,
+        "posterior_std": 0.18686913360524202,
+        "root_second_moment": 352.06350093231055,
+        "state_jacobian_bound": 1.413700475390544,
+        "gaussian_input_lipschitz": 22650414.67196656
+      },
+      {
+        "t_index": 7,
+        "state_gain": 1.0195131375710562,
+        "noise_predictor_gain": 0.09882174263587415,
+        "posterior_std": 0.17216649169448908,
+        "root_second_moment": 360.07126047300625,
+        "state_jacobian_bound": 1.4000375430611083,
+        "gaussian_input_lipschitz": 31711430.90665534
+      },
+      {
+        "t_index": 6,
+        "state_gain": 1.016768655324312,
+        "noise_predictor_gain": 0.09617211235973153,
+        "posterior_std": 0.15674636600022593,
+        "root_second_moment": 367.2057538675131,
+        "state_jacobian_bound": 1.3870903568475592,
+        "gaussian_input_lipschitz": 43986620.01245928
+      },
+      {
+        "t_index": 5,
+        "state_gain": 1.0141210975262227,
+        "noise_predictor_gain": 0.09357045193347549,
+        "posterior_std": 0.1403074159578021,
+        "root_second_moment": 373.44582114581715,
+        "state_jacobian_bound": 1.3744248084678232,
+        "gaussian_input_lipschitz": 60456301.785771266
+      },
+      {
+        "t_index": 4,
+        "state_gain": 1.0115534613696517,
+        "noise_predictor_gain": 0.09085230300363,
+        "posterior_std": 0.12241839832255699,
+        "root_second_moment": 378.7706800656695,
+        "state_jacobian_bound": 1.3613906294435152,
+        "gaussian_input_lipschitz": 82304642.74195826
+      },
+      {
+        "t_index": 3,
+        "state_gain": 1.0090504960951008,
+        "noise_predictor_gain": 0.08772386084129101,
+        "posterior_std": 0.10240814376243118,
+        "root_second_moment": 383.15842691116325,
+        "state_jacobian_bound": 1.346841240353909,
+        "gaussian_input_lipschitz": 110851287.11746441
+      },
+      {
+        "t_index": 2,
+        "state_gain": 1.0065983119303272,
+        "noise_predictor_gain": 0.08355812990015249,
+        "posterior_std": 0.0791087890728575,
+        "root_second_moment": 386.5823013061336,
+        "state_jacobian_bound": 1.328348433472644,
+        "gaussian_input_lipschitz": 147249133.59091014
+      },
+      {
+        "t_index": 1,
+        "state_gain": 1.004184052226928,
+        "noise_predictor_gain": 0.07665468639133013,
+        "posterior_std": 0.050096604686751936,
+        "root_second_moment": 388.998981750441,
+        "state_jacobian_bound": 1.299351676163347,
+        "gaussian_input_lipschitz": 191328408.54494968
+      },
+      {
+        "t_index": 0,
+        "state_gain": 1.0017956115005207,
+        "noise_predictor_gain": 0.05995370899037095,
+        "posterior_std": 0.0,
+        "root_second_moment": 390.2833668020287,
+        "state_jacobian_bound": 1.232654214698261,
+        "gaussian_input_lipschitz": 235841769.18444303
+      }
+    ]
+  },
+  "analytic_residual_drift_norm_bound": 0.0,
+  "abstraction_certificate": {
+    "method": "partitioned_grid_least_squares_with_empirical_envelopes",
+    "error_bound_mode": "validation",
+    "validation_error_margin": 1.25,
+    "box": [
+      [
+        -6.0,
+        6.0
+      ],
+      [
+        -6.0,
+        6.0
+      ]
+    ],
+    "partition_shape": [
+      1,
+      1
+    ],
+    "partition_count": 1,
+    "fit_points": 89,
+    "polynomial_degree": 2,
+    "global_fit_error": 0.0,
+    "max_local_fit_error": 0.0,
+    "max_local_error_bound": 0.0,
+    "extra_error_margin": 0.0,
+    "local_error_bounds_include_extra_margin": true,
+    "analytic_residual_drift_norm_bound": 0.0,
+    "epsilon_r": 0.0,
+    "max_cell_diffusion_eigenvalue": 0.004567888803158455,
+    "diffusion_bound_mode": "sample",
+    "diffusion_bound_is_global_for_learned_sampler": false,
+    "analytic_diffusion_eigenvalue_bound": 131.25156125615726,
+    "diffusion_confidence_delta": 0.05,
+    "diffusion_sample_count": 32,
+    "diffusion_confidence_factor": null,
+    "diffusion_margin": 1.0,
+    "cell_reports": [
+      {
+        "index": 0,
+        "box": [
+          [
+            -6.0,
+            6.0
+          ],
+          [
+            -6.0,
+            6.0
+          ]
+        ],
+        "fit_points": 71,
+        "validation_points": 18,
+        "fit_error": 0.0,
+        "validation_error": 0.0,
+        "base_error_envelope": 0.0,
+        "extra_error_margin": 0.0,
+        "error_envelope": 0.0,
+        "error_bound_type": "validation",
+        "max_diffusion_eigenvalue": 0.004567888803158455
+      }
+    ],
+    "note": "Each local polynomial is assessed on a deterministic holdout subset. This is an empirical validation envelope, not a formal neural-network or distributional bound.",
+    "reverse_moment_diagnostics": {
+      "method": "reverse_polynomial",
+      "terminal_sampling_used": false,
+      "polynomial_degree": 2,
+      "fit_node_count": 3,
+      "validation_node_count": 3,
+      "fit_radius": 2.0,
+      "validation_radius": 3.0,
+      "validation_margin": 1.25,
+      "max_step_noise_fit_error": 1.132038180090248,
+      "mean_step_noise_fit_error": 0.7623831683365709,
+      "normalized_terminal_update_error_indicator": 16.440090803104187,
+      "physical_drift_validation_error": 2.1581985977179374,
+      "validation_error_is_formal_bound": false,
+      "gaussian_moment_closure": true,
+      "moment_closure_error_certified": false,
+      "max_quadratic_covariance_fraction": 0.18886436771796705,
+      "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+      "latent_diffusion_dimension": 1,
+      "physical_state_dimension": 2,
+      "physical_stochastic_state_indices": [
+        1
+      ]
+    },
+    "reverse_surrogate_drift_error_margin": 0.0,
+    "reverse_surrogate_error_covered_by_analytic_envelope": false,
+    "moment_source": "diffusion_reverse_polynomial_covariance_sde",
+    "diffusion_physical_role": "diffusion_only",
+    "nominal_drift_preserved": true,
+    "physical_stochastic_state_indices": [
+      1
+    ],
+    "physical_noise_support_is_known": true,
+    "diffusion_covariance_projected_to_physical_noise_support": true
+  },
+  "abstraction_probe_states": 89,
+  "residual_abstraction_fit_error": 0.0,
+  "residual_abstraction_epsilon": 0.0,
+  "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+  "Gbar": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.004567888803158455
+    ]
+  ],
+  "barrier": {
+    "solver_backend": "sample",
+    "solver_status": "Maximum number of iterations has been exceeded.",
+    "certificate_method": "prajna2004_rho_optimization",
+    "verification_level": "sampled_constraints_not_formal",
+    "drift_fit_error": 0.0,
+    "abstraction_error_bound": 0.0,
+    "abstraction_error_mode": "off",
+    "rho": 0.6993044181622373,
+    "risk_bound": 0.6993044181622373,
+    "gamma": 0.6993044181622373,
+    "formulation": "prajna_optimization",
+    "initial_condition_mode": "worst_case",
+    "initial_distribution": null,
+    "initial_barrier_statistic": 0.7076377514956055,
+    "dynamics_semantics": "continuous_time_generator",
+    "transition_expectation_error_bound": 0.0,
+    "transition_sample_count": 0,
+    "epsilon": 0.6993044181622373,
+    "generator_c": 0.0,
+    "time_horizon": 0.0,
+    "diffusion_generator_error_bound": 0.0,
+    "sdp_max_constraint_violation": 0.0,
+    "sdp_min_gram_eigenvalue": 0.0,
+    "safety_probability_lower_bound": 0.0,
+    "objective": 130.63628486995714,
+    "success": false,
+    "coeffs": [
+      -1.2736539639214866,
+      0.22075746891274825,
+      -0.37486787079286005,
+      0.018243256782008888,
+      0.10943352454499444,
+      0.15497118564152612
+    ],
+    "exponents": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "max_initial_violation": 0.008333333333368165,
+    "max_unsafe_violation": 0.0,
+    "max_positive_violation": 3.450649332709228,
+    "max_generator_violation": 6.0447327580958,
+    "n_counterexamples": 0
+  },
+  "mosek_available": true,
+  "barrier_solver_requested": "sample",
+  "barrier_solver_used": "sample",
+  "barrier_formulation": "prajna_optimization",
+  "barrier_solver_error": null,
+  "barrier_degree": 2,
+  "barrier_samples": 300,
+  "barrier_verify_box": [
+    [
+      -6.0,
+      6.0
+    ],
+    [
+      -6.0,
+      6.0
+    ]
+  ],
+  "counterexample_rounds": 0,
+  "benchmark_simulation_diagnostic": {
+    "unsafe_reach_rate": null,
+    "mean_first_hit_step": null,
+    "hit_count": 0,
+    "rollouts": 0,
+    "horizon": 0
+  },
+  "sos_drift_degree": 3,
+  "sos_drift_fit_samples": 80,
+  "sos_relaxation_degree": 4,
+  "sos_margin": 1e-06,
+  "sos_rho_upper": 1.5,
+  "sos_initial_objective_weight": 0.0,
+  "sos_abstraction_error_mode": "off",
+  "sbc_epsilon": 0.05,
+  "sbc_c": 0.0,
+  "sbc_time_horizon": 0.0,
+  "paths": {
+    "dataset": "dataset.npz",
+    "model_dir": "model",
+    "context_encoder": "model/context_encoder.pkl",
+    "conditional_residual_diffusion": "model/conditional_residual_diffusion.pkl",
+    "diffusion_residual_moments": "model/diffusion_residual_moments.pkl",
+    "polynomial_abstraction": "model/polynomial_abstraction.pkl",
+    "barrier_certificate": "barrier_certificate.json",
+    "context_certification": "context_certification.json"
+  },
+  "runtime_sec": 3.8127973079681396,
+  "notes": [
+    "Context encoder uses an MLP autoencoder by default; PCA and stats remain available as lightweight alternatives.",
+    "The nominal physical drift is preserved exactly; the learned diffusion model contributes only a calibrated covariance-rate bound to the SOS generator.",
+    "Terminal PAC calibration is disabled; the configured abstraction and diffusion bound modes determine the learned-model envelope.",
+    "The physical model uses deterministic quadratic reverse-update surrogates and Gaussian moment closure; it draws no terminal residual samples and is not the reverse-time latent SDE itself.",
+    "The reverse-polynomial validation margin is included in the residual abstraction error. Its deterministic-node fit error and Gaussian moment-closure error are not global neural-network guarantees.",
+    "Context coverage is used when estimating the learned diffusion covariance; no context-dependent residual drift is added in diffusion-only mode.",
+    "context_certification='spectral_lipschitz' computes a spectral-norm Lipschitz upper bound for the sklearn MLP diffusion noise predictor and propagates it through the implemented reverse sampler.",
+    "The default formulation jointly minimizes rho and B subject to B<=rho on the initial set, B>=1 on the unsafe set, B>=0 and AB<=0 on the stopped verification domain. This rho is the gamma bound in Prajna et al. (CDC 2004); fixed_epsilon remains available for compatibility.",
+    "The benchmark_simulation_diagnostic uses the benchmark's separate simulator and is not comparable to the certificate unless the simulator has been formally related to the learned abstraction.",
+    "Model artifacts are saved under model/.",
+    "Default barrier_solver is mosek, so no-argument demo runs use the MOSEK SOS/SDP backend. Use --barrier-solver sample for an exploratory sampled fallback, or auto to try MOSEK and fall back to sample on solver failure."
+  ]
+}

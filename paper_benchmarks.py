@@ -17,27 +17,69 @@ from diffusion_sbc.sos import Poly, evaluate_poly
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 DEFAULT_BENCHMARK_ROOT = PROJECT_ROOT / "third_party" / "synncb"
+DEFAULT_EXTERNAL_BENCHMARK_ROOT = PROJECT_ROOT / "external_benchmarks"
 PAPER_CASE_IDS = tuple(f"C{index}" for index in range(1, 10))
 
+# Stable internal IDs are retained for result-file compatibility. These are
+# the presentation names used by the manuscript and its nine-case tables.
+PAPER_CASE_NAMES = {
+    "C1": "C1", "C2": "C2", "C3": "C3",
+    "C4": "C4", "C5": "C5", "C6": "C6", "C7": "C7",
+    "C8": "C8", "C9": "C9",
+}
 
-def load_paper_examples(root: Path = DEFAULT_BENCHMARK_ROOT) -> dict[str, Any]:
-    """Load the nine manuscript cases from the bundled benchmark file."""
+PAPER_CASE_DESCRIPTIONS = {
+    "C1": "two-dimensional quadratic Arch benchmark",
+    "C2": "two-dimensional controlled Duffing Example 4.3",
+    "C3": "two-dimensional quadratic oscillatory benchmark",
+    "C4": "two-dimensional quadratic Van der Pol variant 1",
+    "C5": "three-dimensional cubic Van der Pol variant 2",
+    "C6": "seven-dimensional quadratic Lie-derivative benchmark",
+    "C7": "nine-dimensional quadratic equilibrium benchmark",
+    "C8": "three-dimensional cubic Lyapunov benchmark",
+    "C9": "five-dimensional cubic Lotka benchmark",
+}
+
+PAPER_SOURCE_LABELS = {"C2": "Example 4.3 (Duffing_P1)"}
+
+
+def _load_registry(root: Path, module_name: str) -> dict[str, Any]:
+    """Load a benchmark registry indexed by its declared example names."""
     source = Path(root) / "benchmarks" / "Exampler_B.py"
     if not source.exists():
-        raise FileNotFoundError(f"Paper benchmark registry not found: {source}")
-    spec = importlib.util.spec_from_file_location("paper_benchmark_registry", source)
+        raise FileNotFoundError(f"Benchmark registry not found: {source}")
+    spec = importlib.util.spec_from_file_location(module_name, source)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"Unable to load paper benchmark registry: {source}")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    examples = {str(example.name): example for example in module.examples.values()}
+    return {str(example.name): example for example in module.examples.values()}
+
+
+def load_paper_examples(root: Path = DEFAULT_BENCHMARK_ROOT) -> dict[str, Any]:
+    """Load paper cases, exposing external Duffing Example 4.3 as C2."""
+    examples = _load_registry(root, "paper_benchmark_registry")
     missing = sorted(set(PAPER_CASE_IDS) - set(examples))
     if missing:
         raise ValueError(f"Paper benchmark cases are missing: {missing}")
     unexpected = sorted(set(examples) - set(PAPER_CASE_IDS))
     if unexpected:
         raise ValueError(f"Registry contains cases not used by the paper: {unexpected}")
+    if Path(root).resolve() == DEFAULT_BENCHMARK_ROOT.resolve():
+        external = _load_registry(DEFAULT_EXTERNAL_BENCHMARK_ROOT, "external_benchmark_registry")
+        if "D1" not in external:
+            raise ValueError("External benchmark registry does not define D1")
+        examples["C2"] = external["D1"]
     return {case_id: examples[case_id] for case_id in PAPER_CASE_IDS}
+
+
+def load_examples(root: Path = DEFAULT_BENCHMARK_ROOT) -> dict[str, Any]:
+    """Load any bundled registry without imposing the manuscript C1--C9 set."""
+    source = Path(root) / "benchmarks" / "Exampler_B.py"
+    examples = _load_registry(root, "experiment_benchmark_registry")
+    if not examples:
+        raise ValueError(f"Benchmark registry is empty: {source}")
+    return examples
 
 
 def symbolic_drift(example: Any) -> tuple[list[Poly], int]:

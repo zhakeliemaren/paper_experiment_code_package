@@ -10,7 +10,7 @@ from typing import Any
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-from paper_benchmarks import DEFAULT_BENCHMARK_ROOT, load_paper_examples
+from paper_benchmarks import DEFAULT_BENCHMARK_ROOT, PAPER_CASE_NAMES, PAPER_SOURCE_LABELS, load_paper_examples
 from paper_pipeline import best_candidate
 
 
@@ -40,12 +40,13 @@ def _write_table(rows: list[dict[str, Any]], path: Path) -> None:
         case_id = f"C{index}"
         candidates = _case_rows(rows, case_id)
         best = best_candidate(candidates)
-        source = str(candidates[0].get("source_case", case_id)) if candidates else "--"
+        source = PAPER_SOURCE_LABELS.get(case_id, str(candidates[0].get("source_case", case_id))) if candidates else "--"
+        display_name = PAPER_CASE_NAMES.get(case_id, case_id)
         if best is None:
-            lines.append(f"{case_id} ({source}) & -- & 0 & -- & not verified \\\\")
+            lines.append(f"{display_name} ({source}) & -- & 0 & -- & not verified \\\\")
         else:
             lines.append(
-                f"{case_id} ({source}) & {int(best['barrier_degree'])} & "
+                f"{display_name} ({source}) & {int(best['barrier_degree'])} & "
                 f"{float(best['safety_lower_bound']):.6f} & "
                 f"{float(best['solve_time_seconds']):.2f} & verified \\\\")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -110,13 +111,14 @@ def _plot_benchmark(rows: list[dict[str, Any]], path: Path) -> None:
     slot = (plot[2] - plot[0]) / 9
     for index in range(9):
         case_id = f"C{index + 1}"
+        display_name = PAPER_CASE_NAMES.get(case_id, case_id)
         best = best_candidate(_case_rows(rows, case_id))
         value = 0.0 if best is None else float(best["safety_lower_bound"])
         left = int(plot[0] + index * slot + 0.2 * slot)
         right = int(plot[0] + (index + 1) * slot - 0.2 * slot)
         top = int(plot[3] - value * (plot[3] - plot[1]))
         draw.rectangle((left, top, right, plot[3]), fill="#2878b5", outline="#164d73", width=2)
-        draw.text(((left + right) // 2, plot[3] + 20), case_id, fill="#222222", font=_font(28, True), anchor="ma")
+        draw.text(((left + right) // 2, plot[3] + 20), display_name, fill="#222222", font=_font(24, True), anchor="ma")
         draw.text(((left + right) // 2, max(plot[1] + 10, top - 12)), f"{value:.3f}", fill="#222222", font=_font(22), anchor="ms")
     draw.text((45, (plot[1] + plot[3]) // 2), "Safety lower bound", fill="#222222", font=_font(29, True), anchor="mm")
     image.save(path, dpi=(220, 220), optimize=True)
@@ -127,7 +129,7 @@ def _plot_degree_sweep(rows: list[dict[str, Any]], case_id: str, path: Path) -> 
     width, height = 1300, 820
     image = Image.new("RGB", (width, height), "white")
     draw = ImageDraw.Draw(image)
-    draw.text((width // 2, 40), f"{case_id} barrier-degree sweep", fill="#202020", font=_font(38, True), anchor="ma")
+    draw.text((width // 2, 40), f"{PAPER_CASE_NAMES.get(case_id, case_id)} barrier-degree sweep", fill="#202020", font=_font(38, True), anchor="ma")
     plot = (140, 125, 1220, 680)
     draw.line((plot[0], plot[3], plot[2], plot[3]), fill="#222222", width=3)
     draw.line((plot[0], plot[1], plot[0], plot[3]), fill="#222222", width=3)

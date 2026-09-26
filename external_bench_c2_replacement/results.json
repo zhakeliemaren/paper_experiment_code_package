@@ -1,0 +1,1871 @@
+{
+  "protocol": "one_dimensional_diffusion_vs_gaussian_certificate_methods_paper_fixed_v3",
+  "data_generation": "x_next=x+dt*f_nom(x)+0.03*sqrt(dt)*xi",
+  "main_physical_sde": "dx=f_nom(x)dt+e_j*g_diffusion(x,c)dW",
+  "baseline_physical_sde": "dx=f_nom(x)dt+e_j*g_gaussian_data*dW",
+  "shared_dynamics": false,
+  "shared_training_trajectories": true,
+  "stochastic_state_index": -1,
+  "methods": [
+    "diffusion_direct_generator_sos",
+    "gaussian_neural_rsm_bernstein",
+    "gaussian_c_sbc_multi_candidate_sos"
+  ],
+  "degrees": [
+    2,
+    4,
+    6
+  ],
+  "selection_rule": "minimum reported rho, then minimum solve time",
+  "surrogate_error_semantics": "paper_fixed",
+  "model_error_terms_in_certificate": false,
+  "transition_semantics": "empirical polynomial abstraction of one Euler step of the data-fitted Gaussian SDE",
+  "main_numerical_refinement_cases": [
+    "C5"
+  ],
+  "main_numerical_refinement_degree": 6,
+  "main_numerical_refinement_tolerance": 2e-06,
+  "candidates": [
+    {
+      "example": "D1",
+      "comparison_method": "diffusion_direct_generator_sos",
+      "perturbation_model": "diffusion",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 2,
+      "relaxation_degree": 4,
+      "barrier_coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "gram_basis": 6,
+      "multiplier_gram_basis": 3,
+      "estimated_psd_scalar_variables": 132,
+      "estimated_coefficient_equalities": 60,
+      "status": "posterior_check_failed",
+      "solver_status": "solver_error: Solver 'MOSEK' failed. Try another solver, or solve with verbose=True for more information.",
+      "success": false,
+      "nontrivial": false,
+      "raw_rho": 1.0,
+      "reported_rho": 1.0,
+      "safety_lower_bound": 0.0,
+      "solve_time_seconds": 0.2268149999435991,
+      "training_time_seconds": 4.152270799968392,
+      "sdp_max_constraint_violation": 1e+30,
+      "sdp_min_gram_eigenvalue": -1e+30,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07,
+      "numerical_refinement_applied": false,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 1.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "candidate_count": 1,
+      "candidate_source": "full_polynomial_sos",
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.004567888803158455
+        ]
+      ],
+      "Gbar_rank": 1,
+      "Gbar_max_eigenvalue": 0.004567888803158455,
+      "stochastic_state_indices": [
+        1
+      ],
+      "surrogate_error_semantics": "paper_fixed",
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "transition_abstraction_path": "",
+      "error": ""
+    },
+    {
+      "example": "D1",
+      "comparison_method": "gaussian_neural_rsm_bernstein",
+      "perturbation_model": "data_fitted_gaussian",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 2,
+      "relaxation_degree": 0,
+      "barrier_coefficients": [
+        1.0,
+        -0.0,
+        -0.0,
+        -0.0,
+        -0.0,
+        -0.0
+      ],
+      "gram_basis": 1,
+      "multiplier_gram_basis": 1,
+      "estimated_psd_scalar_variables": 12,
+      "estimated_coefficient_equalities": 4,
+      "status": "verified",
+      "solver_status": "interval_verified",
+      "success": true,
+      "nontrivial": false,
+      "raw_rho": 1.0,
+      "reported_rho": 1.0,
+      "safety_lower_bound": 0.0,
+      "solve_time_seconds": 0.42240300006233156,
+      "training_time_seconds": 0.0014551999047398567,
+      "sdp_max_constraint_violation": 0.0,
+      "sdp_min_gram_eigenvalue": 0.0,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07,
+      "numerical_refinement_applied": false,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "candidate_count": 2,
+      "candidate_source": "full_polynomial_feature_network_lp",
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0008616767850246673
+        ]
+      ],
+      "Gbar_rank": 1,
+      "Gbar_max_eigenvalue": 0.0008616767850246673,
+      "stochastic_state_indices": [
+        1
+      ],
+      "surrogate_error_semantics": "paper_fixed",
+      "diffusion_upper_bound_type": "paper_fixed_empirical_one_dimensional_gaussian",
+      "transition_abstraction_path": "D1\\gaussian_transition_abstractions\\degree_2.pkl",
+      "error": ""
+    },
+    {
+      "example": "D1",
+      "comparison_method": "gaussian_c_sbc_multi_candidate_sos",
+      "perturbation_model": "data_fitted_gaussian",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 2,
+      "relaxation_degree": 4,
+      "barrier_coefficients": [
+        0.9999564638597803,
+        3.65088774828523e-07,
+        5.057490934849058e-06,
+        2.6738904732852163e-06,
+        3.3941222048946395e-06,
+        5.296516135605372e-05
+      ],
+      "gram_basis": 6,
+      "multiplier_gram_basis": 3,
+      "estimated_psd_scalar_variables": 132,
+      "estimated_coefficient_equalities": 60,
+      "status": "verified",
+      "solver_status": "optimal",
+      "success": true,
+      "nontrivial": false,
+      "raw_rho": 0.9999699057701359,
+      "reported_rho": 1.0,
+      "safety_lower_bound": 0.0,
+      "solve_time_seconds": 0.9776814000215381,
+      "training_time_seconds": 0.0014551999047398567,
+      "sdp_max_constraint_violation": 4.411460120093999e-09,
+      "sdp_min_gram_eigenvalue": -4.294133090681221e-09,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07,
+      "numerical_refinement_applied": false,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 3.0582301502324327e-07,
+      "candidate_count": 3,
+      "candidate_source": "unrestricted_discrete_polynomial_sos",
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0008616767850246673
+        ]
+      ],
+      "Gbar_rank": 1,
+      "Gbar_max_eigenvalue": 0.0008616767850246673,
+      "stochastic_state_indices": [
+        1
+      ],
+      "surrogate_error_semantics": "paper_fixed",
+      "diffusion_upper_bound_type": "paper_fixed_empirical_one_dimensional_gaussian",
+      "transition_abstraction_path": "D1\\gaussian_transition_abstractions\\degree_2.pkl",
+      "error": ""
+    },
+    {
+      "example": "D1",
+      "comparison_method": "diffusion_direct_generator_sos",
+      "perturbation_model": "diffusion",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 4,
+      "relaxation_degree": 6,
+      "barrier_coefficients": [
+        2.268610722220374e-05,
+        -3.5258110267380515e-07,
+        9.124075295997159e-06,
+        -1.4402908400735759e-05,
+        -6.581096003224414e-05,
+        -8.316830888435158e-05,
+        1.789499545938511e-05,
+        3.0101159475152595e-05,
+        1.1534176469648605e-05,
+        -3.8874476808897325e-05,
+        6.148772565819246e-05,
+        0.0002952942808498576,
+        0.0005237360661493669,
+        0.000383415588242116,
+        0.00033847136659295854
+      ],
+      "gram_basis": 10,
+      "multiplier_gram_basis": 6,
+      "estimated_psd_scalar_variables": 388,
+      "estimated_coefficient_equalities": 112,
+      "status": "verified",
+      "solver_status": "optimal",
+      "success": true,
+      "nontrivial": true,
+      "raw_rho": 0.044308683808552095,
+      "reported_rho": 0.045308683808552096,
+      "safety_lower_bound": 0.9546913161914479,
+      "solve_time_seconds": 0.5635675000958145,
+      "training_time_seconds": 4.152270799968392,
+      "sdp_max_constraint_violation": 3.5148431054565776e-08,
+      "sdp_min_gram_eigenvalue": -3.38768099886485e-08,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07,
+      "numerical_refinement_applied": false,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "candidate_count": 1,
+      "candidate_source": "full_polynomial_sos",
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.004567888803158455
+        ]
+      ],
+      "Gbar_rank": 1,
+      "Gbar_max_eigenvalue": 0.004567888803158455,
+      "stochastic_state_indices": [
+        1
+      ],
+      "surrogate_error_semantics": "paper_fixed",
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "transition_abstraction_path": "",
+      "error": ""
+    },
+    {
+      "example": "D1",
+      "comparison_method": "gaussian_neural_rsm_bernstein",
+      "perturbation_model": "data_fitted_gaussian",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 4,
+      "relaxation_degree": 0,
+      "barrier_coefficients": [
+        0.005207730524081602,
+        -0.0018750591437405495,
+        -0.0715633694354121,
+        0.024385059133750102,
+        0.04268104239214487,
+        0.38479387280369637,
+        0.006226987227024715,
+        0.047568078350973104,
+        0.08344228734271321,
+        0.32045966300330014,
+        0.016745742653427334,
+        0.07320710469268366,
+        0.2298867055008527,
+        0.3337491675270125,
+        0.3361993520526396
+      ],
+      "gram_basis": 1,
+      "multiplier_gram_basis": 1,
+      "estimated_psd_scalar_variables": 12,
+      "estimated_coefficient_equalities": 4,
+      "status": "verified",
+      "solver_status": "interval_verified",
+      "success": true,
+      "nontrivial": true,
+      "raw_rho": 0.10460151741859008,
+      "reported_rho": 0.10560151741859009,
+      "safety_lower_bound": 0.89439848258141,
+      "solve_time_seconds": 2.4099501001182944,
+      "training_time_seconds": 0.0014551999047398567,
+      "sdp_max_constraint_violation": 0.0,
+      "sdp_min_gram_eigenvalue": 0.0,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07,
+      "numerical_refinement_applied": false,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "candidate_count": 2,
+      "candidate_source": "full_polynomial_feature_network_lp",
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0008616767850246673
+        ]
+      ],
+      "Gbar_rank": 1,
+      "Gbar_max_eigenvalue": 0.0008616767850246673,
+      "stochastic_state_indices": [
+        1
+      ],
+      "surrogate_error_semantics": "paper_fixed",
+      "diffusion_upper_bound_type": "paper_fixed_empirical_one_dimensional_gaussian",
+      "transition_abstraction_path": "D1\\gaussian_transition_abstractions\\degree_4.pkl",
+      "error": ""
+    },
+    {
+      "example": "D1",
+      "comparison_method": "gaussian_c_sbc_multi_candidate_sos",
+      "perturbation_model": "data_fitted_gaussian",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 4,
+      "relaxation_degree": 4,
+      "barrier_coefficients": [
+        0.003118191161459321,
+        -0.005883886909127925,
+        -0.06616928832945951,
+        0.014531372759008914,
+        0.02099282484768402,
+        0.3353546131486899,
+        0.007943670894565153,
+        0.04971455244102637,
+        0.08796994681852331,
+        0.30198786671052524,
+        0.020913499733991005,
+        0.08992658369546218,
+        0.27106797374791947,
+        0.37495167816560115,
+        0.3635788983979988
+      ],
+      "gram_basis": 6,
+      "multiplier_gram_basis": 3,
+      "estimated_psd_scalar_variables": 132,
+      "estimated_coefficient_equalities": 60,
+      "status": "verified",
+      "solver_status": "optimal",
+      "success": true,
+      "nontrivial": true,
+      "raw_rho": 0.09274432531021513,
+      "reported_rho": 0.09374432531021513,
+      "safety_lower_bound": 0.9062556746897849,
+      "solve_time_seconds": 3.1519013999495655,
+      "training_time_seconds": 0.0014551999047398567,
+      "sdp_max_constraint_violation": 5.6809275617020205e-09,
+      "sdp_min_gram_eigenvalue": -5.561433492428239e-09,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07,
+      "numerical_refinement_applied": false,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 3.421192824176744e-07,
+      "candidate_count": 3,
+      "candidate_source": "unrestricted_discrete_polynomial_sos",
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0008616767850246673
+        ]
+      ],
+      "Gbar_rank": 1,
+      "Gbar_max_eigenvalue": 0.0008616767850246673,
+      "stochastic_state_indices": [
+        1
+      ],
+      "surrogate_error_semantics": "paper_fixed",
+      "diffusion_upper_bound_type": "paper_fixed_empirical_one_dimensional_gaussian",
+      "transition_abstraction_path": "D1\\gaussian_transition_abstractions\\degree_4.pkl",
+      "error": ""
+    },
+    {
+      "example": "D1",
+      "comparison_method": "diffusion_direct_generator_sos",
+      "perturbation_model": "diffusion",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 6,
+      "relaxation_degree": 8,
+      "barrier_coefficients": [
+        -9.19149179436656e-07,
+        9.990024452060716e-06,
+        1.8463997549992323e-05,
+        0.0002034621207354336,
+        0.0007736234224296293,
+        0.0007657837534313276,
+        -1.610920113802975e-06,
+        -8.438949006682808e-06,
+        -4.858677538524867e-06,
+        6.541770581292809e-07,
+        -9.577500856842403e-06,
+        -6.232212474207854e-05,
+        -0.00015975828542267678,
+        -0.00028631867241274704,
+        -0.000275362282753872,
+        4.935931124458428e-08,
+        3.219329177646702e-07,
+        6.250631822276206e-07,
+        1.2681086848746235e-06,
+        5.858537386005695e-07,
+        -9.114906324099914e-07,
+        2.1239556126943836e-07,
+        1.2891671175395641e-06,
+        4.334338569193366e-06,
+        1.2054608068008753e-05,
+        2.2703940233275737e-05,
+        2.6555323731268252e-05,
+        2.5513595883424277e-05
+      ],
+      "gram_basis": 15,
+      "multiplier_gram_basis": 10,
+      "estimated_psd_scalar_variables": 920,
+      "estimated_coefficient_equalities": 180,
+      "status": "verified",
+      "solver_status": "optimal",
+      "success": true,
+      "nontrivial": true,
+      "raw_rho": 0.0013895748059979864,
+      "reported_rho": 0.0023895748059979864,
+      "safety_lower_bound": 0.997610425194002,
+      "solve_time_seconds": 1.214879399864003,
+      "training_time_seconds": 4.152270799968392,
+      "sdp_max_constraint_violation": 1.5645811091147266e-08,
+      "sdp_min_gram_eigenvalue": -1.5165184125645072e-08,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07,
+      "numerical_refinement_applied": false,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "candidate_count": 1,
+      "candidate_source": "full_polynomial_sos",
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          0
+        ]
+      ],
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.004567888803158455
+        ]
+      ],
+      "Gbar_rank": 1,
+      "Gbar_max_eigenvalue": 0.004567888803158455,
+      "stochastic_state_indices": [
+        1
+      ],
+      "surrogate_error_semantics": "paper_fixed",
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "transition_abstraction_path": "",
+      "error": ""
+    },
+    {
+      "example": "D1",
+      "comparison_method": "gaussian_neural_rsm_bernstein",
+      "perturbation_model": "data_fitted_gaussian",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 6,
+      "relaxation_degree": 0,
+      "barrier_coefficients": [
+        0.0004222649049203899,
+        0.0044540577549407965,
+        0.008508314655676474,
+        0.04268964588970977,
+        0.14592241961648844,
+        0.18802393157640826,
+        -0.011905649595335797,
+        -0.020628026571601968,
+        -0.09301487943616521,
+        -0.09226263591958847,
+        -0.051456181274009985,
+        -0.24003709239956186,
+        -0.22900279439326507,
+        -0.5898512213924146,
+        -0.24212824308689984,
+        0.010342907929003128,
+        0.019324441907360074,
+        0.12747961726670032,
+        0.20562120858865415,
+        0.28167260842723674,
+        0.23718459649588944,
+        0.04102785240730465,
+        0.16993147176889437,
+        0.2435724346196,
+        0.8228510955886409,
+        0.862949892258767,
+        0.8371609815420216,
+        0.45997451057749605
+      ],
+      "gram_basis": 1,
+      "multiplier_gram_basis": 1,
+      "estimated_psd_scalar_variables": 12,
+      "estimated_coefficient_equalities": 4,
+      "status": "verified",
+      "solver_status": "interval_verified",
+      "success": true,
+      "nontrivial": true,
+      "raw_rho": 0.03967353208274472,
+      "reported_rho": 0.04067353208274472,
+      "safety_lower_bound": 0.9593264679172553,
+      "solve_time_seconds": 13.886100099887699,
+      "training_time_seconds": 0.0014551999047398567,
+      "sdp_max_constraint_violation": 0.0,
+      "sdp_min_gram_eigenvalue": 0.0,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07,
+      "numerical_refinement_applied": false,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "candidate_count": 2,
+      "candidate_source": "full_polynomial_feature_network_lp",
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          0
+        ]
+      ],
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0008616767850246673
+        ]
+      ],
+      "Gbar_rank": 1,
+      "Gbar_max_eigenvalue": 0.0008616767850246673,
+      "stochastic_state_indices": [
+        1
+      ],
+      "surrogate_error_semantics": "paper_fixed",
+      "diffusion_upper_bound_type": "paper_fixed_empirical_one_dimensional_gaussian",
+      "transition_abstraction_path": "D1\\gaussian_transition_abstractions\\degree_6.pkl",
+      "error": ""
+    },
+    {
+      "example": "D1",
+      "comparison_method": "gaussian_c_sbc_multi_candidate_sos",
+      "perturbation_model": "data_fitted_gaussian",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 6,
+      "relaxation_degree": 6,
+      "barrier_coefficients": [
+        0.0002676274156238067,
+        0.005466157552090231,
+        0.014758789408280872,
+        0.03345172406231526,
+        0.13088781189115115,
+        0.21094110928008458,
+        -0.011909191699919427,
+        -0.03183248353526427,
+        -0.0993523326481443,
+        -0.10744078398342377,
+        -0.03658045893216171,
+        -0.24562925177005332,
+        -0.3596860375808401,
+        -0.613043008141614,
+        -0.36565629053653725,
+        0.009624565611061425,
+        0.029508716623308354,
+        0.1387632052550598,
+        0.2018392398835532,
+        0.2465976418007301,
+        0.1816634539600562,
+        0.025905852283022827,
+        0.17219964215995948,
+        0.3751974383433092,
+        0.8816632491623132,
+        1.0154011973964912,
+        0.9428787695496695,
+        0.5404927724003967
+      ],
+      "gram_basis": 10,
+      "multiplier_gram_basis": 6,
+      "estimated_psd_scalar_variables": 388,
+      "estimated_coefficient_equalities": 112,
+      "status": "verified",
+      "solver_status": "optimal",
+      "success": true,
+      "nontrivial": true,
+      "raw_rho": 0.03547421589462536,
+      "reported_rho": 0.036474215894625364,
+      "safety_lower_bound": 0.9635257841053746,
+      "solve_time_seconds": 15.848451999947429,
+      "training_time_seconds": 0.0014551999047398567,
+      "sdp_max_constraint_violation": 3.7801679897420115e-08,
+      "sdp_min_gram_eigenvalue": -3.601791672924969e-08,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07,
+      "numerical_refinement_applied": false,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "candidate_count": 3,
+      "candidate_source": "unrestricted_discrete_polynomial_sos",
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          0
+        ]
+      ],
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0008616767850246673
+        ]
+      ],
+      "Gbar_rank": 1,
+      "Gbar_max_eigenvalue": 0.0008616767850246673,
+      "stochastic_state_indices": [
+        1
+      ],
+      "surrogate_error_semantics": "paper_fixed",
+      "diffusion_upper_bound_type": "paper_fixed_empirical_one_dimensional_gaussian",
+      "transition_abstraction_path": "D1\\gaussian_transition_abstractions\\degree_6.pkl",
+      "error": ""
+    }
+  ],
+  "summaries": [
+    {
+      "example": "D1",
+      "comparison_method": "diffusion_direct_generator_sos",
+      "best": {
+        "example": "D1",
+        "comparison_method": "diffusion_direct_generator_sos",
+        "perturbation_model": "diffusion",
+        "state_dim": 2,
+        "drift_degree": 3,
+        "barrier_degree": 6,
+        "relaxation_degree": 8,
+        "barrier_coefficients": [
+          -9.19149179436656e-07,
+          9.990024452060716e-06,
+          1.8463997549992323e-05,
+          0.0002034621207354336,
+          0.0007736234224296293,
+          0.0007657837534313276,
+          -1.610920113802975e-06,
+          -8.438949006682808e-06,
+          -4.858677538524867e-06,
+          6.541770581292809e-07,
+          -9.577500856842403e-06,
+          -6.232212474207854e-05,
+          -0.00015975828542267678,
+          -0.00028631867241274704,
+          -0.000275362282753872,
+          4.935931124458428e-08,
+          3.219329177646702e-07,
+          6.250631822276206e-07,
+          1.2681086848746235e-06,
+          5.858537386005695e-07,
+          -9.114906324099914e-07,
+          2.1239556126943836e-07,
+          1.2891671175395641e-06,
+          4.334338569193366e-06,
+          1.2054608068008753e-05,
+          2.2703940233275737e-05,
+          2.6555323731268252e-05,
+          2.5513595883424277e-05
+        ],
+        "gram_basis": 15,
+        "multiplier_gram_basis": 10,
+        "estimated_psd_scalar_variables": 920,
+        "estimated_coefficient_equalities": 180,
+        "status": "verified",
+        "solver_status": "optimal",
+        "success": true,
+        "nontrivial": true,
+        "raw_rho": 0.0013895748059979864,
+        "reported_rho": 0.0023895748059979864,
+        "safety_lower_bound": 0.997610425194002,
+        "solve_time_seconds": 1.214879399864003,
+        "training_time_seconds": 4.152270799968392,
+        "sdp_max_constraint_violation": 1.5645811091147266e-08,
+        "sdp_min_gram_eigenvalue": -1.5165184125645072e-08,
+        "verification_constraint_tolerance": 1e-07,
+        "verification_gram_tolerance": 1e-07,
+        "numerical_refinement_applied": false,
+        "max_initial_violation": 0.0,
+        "max_unsafe_violation": 0.0,
+        "max_positive_violation": 0.0,
+        "max_generator_violation": 0.0,
+        "candidate_count": 1,
+        "candidate_source": "full_polynomial_sos",
+        "barrier_exponents": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            0
+          ]
+        ],
+        "Gbar": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.004567888803158455
+          ]
+        ],
+        "Gbar_rank": 1,
+        "Gbar_max_eigenvalue": 0.004567888803158455,
+        "stochastic_state_indices": [
+          1
+        ],
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+        "transition_abstraction_path": "",
+        "error": ""
+      }
+    },
+    {
+      "example": "D1",
+      "comparison_method": "gaussian_neural_rsm_bernstein",
+      "best": {
+        "example": "D1",
+        "comparison_method": "gaussian_neural_rsm_bernstein",
+        "perturbation_model": "data_fitted_gaussian",
+        "state_dim": 2,
+        "drift_degree": 3,
+        "barrier_degree": 6,
+        "relaxation_degree": 0,
+        "barrier_coefficients": [
+          0.0004222649049203899,
+          0.0044540577549407965,
+          0.008508314655676474,
+          0.04268964588970977,
+          0.14592241961648844,
+          0.18802393157640826,
+          -0.011905649595335797,
+          -0.020628026571601968,
+          -0.09301487943616521,
+          -0.09226263591958847,
+          -0.051456181274009985,
+          -0.24003709239956186,
+          -0.22900279439326507,
+          -0.5898512213924146,
+          -0.24212824308689984,
+          0.010342907929003128,
+          0.019324441907360074,
+          0.12747961726670032,
+          0.20562120858865415,
+          0.28167260842723674,
+          0.23718459649588944,
+          0.04102785240730465,
+          0.16993147176889437,
+          0.2435724346196,
+          0.8228510955886409,
+          0.862949892258767,
+          0.8371609815420216,
+          0.45997451057749605
+        ],
+        "gram_basis": 1,
+        "multiplier_gram_basis": 1,
+        "estimated_psd_scalar_variables": 12,
+        "estimated_coefficient_equalities": 4,
+        "status": "verified",
+        "solver_status": "interval_verified",
+        "success": true,
+        "nontrivial": true,
+        "raw_rho": 0.03967353208274472,
+        "reported_rho": 0.04067353208274472,
+        "safety_lower_bound": 0.9593264679172553,
+        "solve_time_seconds": 13.886100099887699,
+        "training_time_seconds": 0.0014551999047398567,
+        "sdp_max_constraint_violation": 0.0,
+        "sdp_min_gram_eigenvalue": 0.0,
+        "verification_constraint_tolerance": 1e-07,
+        "verification_gram_tolerance": 1e-07,
+        "numerical_refinement_applied": false,
+        "max_initial_violation": 0.0,
+        "max_unsafe_violation": 0.0,
+        "max_positive_violation": 0.0,
+        "max_generator_violation": 0.0,
+        "candidate_count": 2,
+        "candidate_source": "full_polynomial_feature_network_lp",
+        "barrier_exponents": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            0
+          ]
+        ],
+        "Gbar": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0008616767850246673
+          ]
+        ],
+        "Gbar_rank": 1,
+        "Gbar_max_eigenvalue": 0.0008616767850246673,
+        "stochastic_state_indices": [
+          1
+        ],
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_upper_bound_type": "paper_fixed_empirical_one_dimensional_gaussian",
+        "transition_abstraction_path": "D1\\gaussian_transition_abstractions\\degree_6.pkl",
+        "error": ""
+      }
+    },
+    {
+      "example": "D1",
+      "comparison_method": "gaussian_c_sbc_multi_candidate_sos",
+      "best": {
+        "example": "D1",
+        "comparison_method": "gaussian_c_sbc_multi_candidate_sos",
+        "perturbation_model": "data_fitted_gaussian",
+        "state_dim": 2,
+        "drift_degree": 3,
+        "barrier_degree": 6,
+        "relaxation_degree": 6,
+        "barrier_coefficients": [
+          0.0002676274156238067,
+          0.005466157552090231,
+          0.014758789408280872,
+          0.03345172406231526,
+          0.13088781189115115,
+          0.21094110928008458,
+          -0.011909191699919427,
+          -0.03183248353526427,
+          -0.0993523326481443,
+          -0.10744078398342377,
+          -0.03658045893216171,
+          -0.24562925177005332,
+          -0.3596860375808401,
+          -0.613043008141614,
+          -0.36565629053653725,
+          0.009624565611061425,
+          0.029508716623308354,
+          0.1387632052550598,
+          0.2018392398835532,
+          0.2465976418007301,
+          0.1816634539600562,
+          0.025905852283022827,
+          0.17219964215995948,
+          0.3751974383433092,
+          0.8816632491623132,
+          1.0154011973964912,
+          0.9428787695496695,
+          0.5404927724003967
+        ],
+        "gram_basis": 10,
+        "multiplier_gram_basis": 6,
+        "estimated_psd_scalar_variables": 388,
+        "estimated_coefficient_equalities": 112,
+        "status": "verified",
+        "solver_status": "optimal",
+        "success": true,
+        "nontrivial": true,
+        "raw_rho": 0.03547421589462536,
+        "reported_rho": 0.036474215894625364,
+        "safety_lower_bound": 0.9635257841053746,
+        "solve_time_seconds": 15.848451999947429,
+        "training_time_seconds": 0.0014551999047398567,
+        "sdp_max_constraint_violation": 3.7801679897420115e-08,
+        "sdp_min_gram_eigenvalue": -3.601791672924969e-08,
+        "verification_constraint_tolerance": 1e-07,
+        "verification_gram_tolerance": 1e-07,
+        "numerical_refinement_applied": false,
+        "max_initial_violation": 0.0,
+        "max_unsafe_violation": 0.0,
+        "max_positive_violation": 0.0,
+        "max_generator_violation": 0.0,
+        "candidate_count": 3,
+        "candidate_source": "unrestricted_discrete_polynomial_sos",
+        "barrier_exponents": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            0
+          ]
+        ],
+        "Gbar": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0008616767850246673
+          ]
+        ],
+        "Gbar_rank": 1,
+        "Gbar_max_eigenvalue": 0.0008616767850246673,
+        "stochastic_state_indices": [
+          1
+        ],
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_upper_bound_type": "paper_fixed_empirical_one_dimensional_gaussian",
+        "transition_abstraction_path": "D1\\gaussian_transition_abstractions\\degree_6.pkl",
+        "error": ""
+      }
+    }
+  ]
+}

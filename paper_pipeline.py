@@ -19,6 +19,8 @@ from diffusion_sbc.config import ExperimentConfig
 from diffusion_sbc.pipeline import train_pipeline
 from diffusion_sbc.sos import Poly
 from paper_benchmarks import (
+    PAPER_CASE_NAMES,
+    PAPER_SOURCE_LABELS,
     build_system,
     certificate_config,
     problem_size,
@@ -28,6 +30,10 @@ from paper_benchmarks import (
 
 RESULT_PROTOCOL = "paper_main_diffusion_generator_sos_v1"
 METHOD_NAME = "diffusion_direct_generator_sos"
+# Display name used by the manuscript for the Gaussian discrete baseline.
+# The serialized method key remains unchanged for compatibility with archived
+# comparison results and is intentionally not used as a case identifier.
+DIFFSBC_METHOD_NAME = "DiffSBC"
 
 
 def resolve_stochastic_state_index(state_dim: int, requested: int) -> int:
@@ -347,19 +353,19 @@ def write_results(output: Path, rows: list[dict[str, Any]], settings: dict[str, 
     lines = [
         "# Main-Method Paper Results",
         "",
-        "| Case | Source case | Degree | rho | Safety lower bound | Certificate time (s) | Status |",
-        "|---|---|---:|---:|---:|---:|---|",
+        "| Bench | Internal ID | Source case | Degree | rho | Safety lower bound | Certificate time (s) | Status |",
+        "|---|---|---|---:|---:|---:|---:|---|",
     ]
     for case_id in settings["case_ids"]:
         case_rows = [row for row in ordered if row["example"] == case_id]
         best = best_candidate(case_rows)
-        source = str(case_rows[0]["source_case"]) if case_rows else "--"
+        source = PAPER_SOURCE_LABELS.get(case_id, str(case_rows[0]["source_case"])) if case_rows else "--"
         if best is None:
             statuses = ",".join(sorted({str(row["status"]) for row in case_rows}))
-            lines.append(f"| {case_id} | {source} | -- | 1 | 0 | -- | {statuses} |")
+            lines.append(f"| {PAPER_CASE_NAMES.get(case_id, case_id)} | {case_id} | {source} | -- | 1 | 0 | -- | {statuses} |")
         else:
             lines.append(
-                f"| {case_id} | {source} | {best['barrier_degree']} | "
+                f"| {PAPER_CASE_NAMES.get(case_id, case_id)} | {case_id} | {source} | {best['barrier_degree']} | "
                 f"{best['reported_rho']:.9g} | {best['safety_lower_bound']:.9g} | "
                 f"{best['solve_time_seconds']:.6g} | {best['status']} |"
             )

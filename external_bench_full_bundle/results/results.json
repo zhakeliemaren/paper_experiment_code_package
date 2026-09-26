@@ -1,0 +1,2748 @@
+{
+  "protocol": "paper_main_diffusion_generator_sos_v1",
+  "method": "diffusion_direct_generator_sos",
+  "case_ids": [
+    "D1",
+    "D2",
+    "D3"
+  ],
+  "degrees": [
+    2,
+    4,
+    6
+  ],
+  "selection_rule": "minimum reported rho, then minimum solve time",
+  "initial_condition_semantics": "worst_case",
+  "verification_claim": "formal certificate for the fixed learned surrogate model",
+  "settings": {
+    "case_ids": [
+      "D1",
+      "D2",
+      "D3"
+    ],
+    "degrees": [
+      2,
+      4,
+      6
+    ],
+    "seed": 7,
+    "dt": 0.05,
+    "data_noise_amplitude": 0.03,
+    "n_trajectories": 64,
+    "horizon": 40,
+    "history": 4,
+    "train_test_split": "80/20 grouped by trajectory",
+    "stochastic_state_index": -1,
+    "stochastic_dimension": 1,
+    "diffusion_steps": 32,
+    "diffusion_train_copies": 8,
+    "diffusion_max_iter": 300,
+    "diffusion_batch_size": 256,
+    "diffusion_learning_rate": 0.0005,
+    "diffusion_hidden_widths": [
+      64,
+      64
+    ],
+    "reverse_moment_method": "reverse_polynomial",
+    "reverse_polynomial_degree": 2,
+    "moment_conditions": 32,
+    "polynomial_conditions": 80,
+    "initial_condition_semantics": "worst_case",
+    "reporting_rho_allowance": 0.001,
+    "max_psd_scalars": 12000,
+    "refinement_case": "C4",
+    "refinement_degree": 6,
+    "refinement_tolerance": 2e-06
+  },
+  "candidates": [
+    {
+      "example": "D1",
+      "source_case": "Duffing_P1",
+      "method": "diffusion_direct_generator_sos",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 2,
+      "relaxation_degree": 4,
+      "barrier_coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "gram_basis": 6,
+      "multiplier_gram_basis": 3,
+      "estimated_psd_scalar_variables": 132,
+      "estimated_coefficient_equalities": 60,
+      "status": "posterior_check_failed",
+      "solver_status": "solver_error: Solver 'MOSEK' failed. Try another solver, or solve with verbose=True for more information.",
+      "success": false,
+      "nontrivial": false,
+      "raw_rho": 1.0,
+      "reported_rho": 1.0,
+      "safety_lower_bound": 0.0,
+      "solve_time_seconds": 0.21447740006260574,
+      "training_time_seconds": 3.8253566999919713,
+      "end_to_end_time_seconds": 4.039834100054577,
+      "sdp_max_constraint_violation": 1e+30,
+      "sdp_min_gram_eigenvalue": -1e+30,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 1.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "epsilon_r": 0.0,
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.004567888803158455
+        ]
+      ],
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "abstraction_certificate": {
+        "method": "partitioned_grid_least_squares_with_empirical_envelopes",
+        "error_bound_mode": "validation",
+        "validation_error_margin": 1.25,
+        "box": [
+          [
+            -6.0,
+            6.0
+          ],
+          [
+            -6.0,
+            6.0
+          ]
+        ],
+        "partition_shape": [
+          1,
+          1
+        ],
+        "partition_count": 1,
+        "fit_points": 89,
+        "polynomial_degree": 2,
+        "global_fit_error": 0.0,
+        "max_local_fit_error": 0.0,
+        "max_local_error_bound": 0.0,
+        "extra_error_margin": 0.0,
+        "local_error_bounds_include_extra_margin": true,
+        "analytic_residual_drift_norm_bound": 0.0,
+        "epsilon_r": 0.0,
+        "max_cell_diffusion_eigenvalue": 0.004567888803158455,
+        "diffusion_bound_mode": "sample",
+        "diffusion_bound_is_global_for_learned_sampler": false,
+        "analytic_diffusion_eigenvalue_bound": 131.25156125615726,
+        "diffusion_confidence_delta": 0.05,
+        "diffusion_sample_count": 32,
+        "diffusion_confidence_factor": null,
+        "diffusion_margin": 1.0,
+        "cell_reports": [
+          {
+            "index": 0,
+            "box": [
+              [
+                -6.0,
+                6.0
+              ],
+              [
+                -6.0,
+                6.0
+              ]
+            ],
+            "fit_points": 71,
+            "validation_points": 18,
+            "fit_error": 0.0,
+            "validation_error": 0.0,
+            "base_error_envelope": 0.0,
+            "extra_error_margin": 0.0,
+            "error_envelope": 0.0,
+            "error_bound_type": "validation",
+            "max_diffusion_eigenvalue": 0.004567888803158455
+          }
+        ],
+        "note": "Each local polynomial is assessed on a deterministic holdout subset. This is an empirical validation envelope, not a formal neural-network or distributional bound.",
+        "reverse_moment_diagnostics": {
+          "method": "reverse_polynomial",
+          "terminal_sampling_used": false,
+          "polynomial_degree": 2,
+          "fit_node_count": 3,
+          "validation_node_count": 3,
+          "fit_radius": 2.0,
+          "validation_radius": 3.0,
+          "validation_margin": 1.25,
+          "max_step_noise_fit_error": 1.132038180090248,
+          "mean_step_noise_fit_error": 0.7623831683365709,
+          "normalized_terminal_update_error_indicator": 16.440090803104187,
+          "physical_drift_validation_error": 2.1581985977179374,
+          "validation_error_is_formal_bound": false,
+          "gaussian_moment_closure": true,
+          "moment_closure_error_certified": false,
+          "max_quadratic_covariance_fraction": 0.18886436771796705,
+          "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+          "latent_diffusion_dimension": 1,
+          "physical_state_dimension": 2,
+          "physical_stochastic_state_indices": [
+            1
+          ]
+        },
+        "reverse_surrogate_drift_error_margin": 0.0,
+        "reverse_surrogate_error_covered_by_analytic_envelope": false,
+        "moment_source": "diffusion_reverse_polynomial_covariance_sde",
+        "diffusion_physical_role": "diffusion_only",
+        "nominal_drift_preserved": true,
+        "physical_stochastic_state_indices": [
+          1
+        ],
+        "physical_noise_support_is_known": true,
+        "diffusion_covariance_projected_to_physical_noise_support": true,
+        "sos_center_drift": "exact_nominal_polynomial",
+        "sos_center_refit_error": 0.0,
+        "learned_physical_component": "diffusion_covariance_only",
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_covariance_is_exact": true,
+        "drift_polynomial_is_exact": true,
+        "model_to_real_error_in_generator": false,
+        "statistical_transfer_to_real_system_certified": false,
+        "verification_claim": "formal_certificate_for_fixed_surrogate_model"
+      },
+      "numerical_refinement_applied": false,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07
+    },
+    {
+      "example": "D1",
+      "source_case": "Duffing_P1",
+      "method": "diffusion_direct_generator_sos",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 4,
+      "relaxation_degree": 6,
+      "barrier_coefficients": [
+        2.268610722220374e-05,
+        -3.5258110267380515e-07,
+        9.124075295997159e-06,
+        -1.4402908400735759e-05,
+        -6.581096003224414e-05,
+        -8.316830888435158e-05,
+        1.789499545938511e-05,
+        3.0101159475152595e-05,
+        1.1534176469648605e-05,
+        -3.8874476808897325e-05,
+        6.148772565819246e-05,
+        0.0002952942808498576,
+        0.0005237360661493669,
+        0.000383415588242116,
+        0.00033847136659295854
+      ],
+      "gram_basis": 10,
+      "multiplier_gram_basis": 6,
+      "estimated_psd_scalar_variables": 388,
+      "estimated_coefficient_equalities": 112,
+      "status": "verified",
+      "solver_status": "optimal",
+      "success": true,
+      "nontrivial": true,
+      "raw_rho": 0.044308683808552095,
+      "reported_rho": 0.045308683808552096,
+      "safety_lower_bound": 0.9546913161914479,
+      "solve_time_seconds": 0.49646209995262325,
+      "training_time_seconds": 3.8253566999919713,
+      "end_to_end_time_seconds": 4.3218187999445945,
+      "sdp_max_constraint_violation": 3.5148431054565776e-08,
+      "sdp_min_gram_eigenvalue": -3.38768099886485e-08,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "epsilon_r": 0.0,
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.004567888803158455
+        ]
+      ],
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "abstraction_certificate": {
+        "method": "partitioned_grid_least_squares_with_empirical_envelopes",
+        "error_bound_mode": "validation",
+        "validation_error_margin": 1.25,
+        "box": [
+          [
+            -6.0,
+            6.0
+          ],
+          [
+            -6.0,
+            6.0
+          ]
+        ],
+        "partition_shape": [
+          1,
+          1
+        ],
+        "partition_count": 1,
+        "fit_points": 89,
+        "polynomial_degree": 2,
+        "global_fit_error": 0.0,
+        "max_local_fit_error": 0.0,
+        "max_local_error_bound": 0.0,
+        "extra_error_margin": 0.0,
+        "local_error_bounds_include_extra_margin": true,
+        "analytic_residual_drift_norm_bound": 0.0,
+        "epsilon_r": 0.0,
+        "max_cell_diffusion_eigenvalue": 0.004567888803158455,
+        "diffusion_bound_mode": "sample",
+        "diffusion_bound_is_global_for_learned_sampler": false,
+        "analytic_diffusion_eigenvalue_bound": 131.25156125615726,
+        "diffusion_confidence_delta": 0.05,
+        "diffusion_sample_count": 32,
+        "diffusion_confidence_factor": null,
+        "diffusion_margin": 1.0,
+        "cell_reports": [
+          {
+            "index": 0,
+            "box": [
+              [
+                -6.0,
+                6.0
+              ],
+              [
+                -6.0,
+                6.0
+              ]
+            ],
+            "fit_points": 71,
+            "validation_points": 18,
+            "fit_error": 0.0,
+            "validation_error": 0.0,
+            "base_error_envelope": 0.0,
+            "extra_error_margin": 0.0,
+            "error_envelope": 0.0,
+            "error_bound_type": "validation",
+            "max_diffusion_eigenvalue": 0.004567888803158455
+          }
+        ],
+        "note": "Each local polynomial is assessed on a deterministic holdout subset. This is an empirical validation envelope, not a formal neural-network or distributional bound.",
+        "reverse_moment_diagnostics": {
+          "method": "reverse_polynomial",
+          "terminal_sampling_used": false,
+          "polynomial_degree": 2,
+          "fit_node_count": 3,
+          "validation_node_count": 3,
+          "fit_radius": 2.0,
+          "validation_radius": 3.0,
+          "validation_margin": 1.25,
+          "max_step_noise_fit_error": 1.132038180090248,
+          "mean_step_noise_fit_error": 0.7623831683365709,
+          "normalized_terminal_update_error_indicator": 16.440090803104187,
+          "physical_drift_validation_error": 2.1581985977179374,
+          "validation_error_is_formal_bound": false,
+          "gaussian_moment_closure": true,
+          "moment_closure_error_certified": false,
+          "max_quadratic_covariance_fraction": 0.18886436771796705,
+          "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+          "latent_diffusion_dimension": 1,
+          "physical_state_dimension": 2,
+          "physical_stochastic_state_indices": [
+            1
+          ]
+        },
+        "reverse_surrogate_drift_error_margin": 0.0,
+        "reverse_surrogate_error_covered_by_analytic_envelope": false,
+        "moment_source": "diffusion_reverse_polynomial_covariance_sde",
+        "diffusion_physical_role": "diffusion_only",
+        "nominal_drift_preserved": true,
+        "physical_stochastic_state_indices": [
+          1
+        ],
+        "physical_noise_support_is_known": true,
+        "diffusion_covariance_projected_to_physical_noise_support": true,
+        "sos_center_drift": "exact_nominal_polynomial",
+        "sos_center_refit_error": 0.0,
+        "learned_physical_component": "diffusion_covariance_only",
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_covariance_is_exact": true,
+        "drift_polynomial_is_exact": true,
+        "model_to_real_error_in_generator": false,
+        "statistical_transfer_to_real_system_certified": false,
+        "verification_claim": "formal_certificate_for_fixed_surrogate_model"
+      },
+      "numerical_refinement_applied": false,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07
+    },
+    {
+      "example": "D1",
+      "source_case": "Duffing_P1",
+      "method": "diffusion_direct_generator_sos",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 6,
+      "relaxation_degree": 8,
+      "barrier_coefficients": [
+        -9.19149179436656e-07,
+        9.990024452060716e-06,
+        1.8463997549992323e-05,
+        0.0002034621207354336,
+        0.0007736234224296293,
+        0.0007657837534313276,
+        -1.610920113802975e-06,
+        -8.438949006682808e-06,
+        -4.858677538524867e-06,
+        6.541770581292809e-07,
+        -9.577500856842403e-06,
+        -6.232212474207854e-05,
+        -0.00015975828542267678,
+        -0.00028631867241274704,
+        -0.000275362282753872,
+        4.935931124458428e-08,
+        3.219329177646702e-07,
+        6.250631822276206e-07,
+        1.2681086848746235e-06,
+        5.858537386005695e-07,
+        -9.114906324099914e-07,
+        2.1239556126943836e-07,
+        1.2891671175395641e-06,
+        4.334338569193366e-06,
+        1.2054608068008753e-05,
+        2.2703940233275737e-05,
+        2.6555323731268252e-05,
+        2.5513595883424277e-05
+      ],
+      "gram_basis": 15,
+      "multiplier_gram_basis": 10,
+      "estimated_psd_scalar_variables": 920,
+      "estimated_coefficient_equalities": 180,
+      "status": "verified",
+      "solver_status": "optimal",
+      "success": true,
+      "nontrivial": true,
+      "raw_rho": 0.0013895748059979864,
+      "reported_rho": 0.0023895748059979864,
+      "safety_lower_bound": 0.997610425194002,
+      "solve_time_seconds": 1.204264100175351,
+      "training_time_seconds": 3.8253566999919713,
+      "end_to_end_time_seconds": 5.029620800167322,
+      "sdp_max_constraint_violation": 1.5645811091147266e-08,
+      "sdp_min_gram_eigenvalue": -1.5165184125645072e-08,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          0
+        ]
+      ],
+      "epsilon_r": 0.0,
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.004567888803158455
+        ]
+      ],
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "abstraction_certificate": {
+        "method": "partitioned_grid_least_squares_with_empirical_envelopes",
+        "error_bound_mode": "validation",
+        "validation_error_margin": 1.25,
+        "box": [
+          [
+            -6.0,
+            6.0
+          ],
+          [
+            -6.0,
+            6.0
+          ]
+        ],
+        "partition_shape": [
+          1,
+          1
+        ],
+        "partition_count": 1,
+        "fit_points": 89,
+        "polynomial_degree": 2,
+        "global_fit_error": 0.0,
+        "max_local_fit_error": 0.0,
+        "max_local_error_bound": 0.0,
+        "extra_error_margin": 0.0,
+        "local_error_bounds_include_extra_margin": true,
+        "analytic_residual_drift_norm_bound": 0.0,
+        "epsilon_r": 0.0,
+        "max_cell_diffusion_eigenvalue": 0.004567888803158455,
+        "diffusion_bound_mode": "sample",
+        "diffusion_bound_is_global_for_learned_sampler": false,
+        "analytic_diffusion_eigenvalue_bound": 131.25156125615726,
+        "diffusion_confidence_delta": 0.05,
+        "diffusion_sample_count": 32,
+        "diffusion_confidence_factor": null,
+        "diffusion_margin": 1.0,
+        "cell_reports": [
+          {
+            "index": 0,
+            "box": [
+              [
+                -6.0,
+                6.0
+              ],
+              [
+                -6.0,
+                6.0
+              ]
+            ],
+            "fit_points": 71,
+            "validation_points": 18,
+            "fit_error": 0.0,
+            "validation_error": 0.0,
+            "base_error_envelope": 0.0,
+            "extra_error_margin": 0.0,
+            "error_envelope": 0.0,
+            "error_bound_type": "validation",
+            "max_diffusion_eigenvalue": 0.004567888803158455
+          }
+        ],
+        "note": "Each local polynomial is assessed on a deterministic holdout subset. This is an empirical validation envelope, not a formal neural-network or distributional bound.",
+        "reverse_moment_diagnostics": {
+          "method": "reverse_polynomial",
+          "terminal_sampling_used": false,
+          "polynomial_degree": 2,
+          "fit_node_count": 3,
+          "validation_node_count": 3,
+          "fit_radius": 2.0,
+          "validation_radius": 3.0,
+          "validation_margin": 1.25,
+          "max_step_noise_fit_error": 1.132038180090248,
+          "mean_step_noise_fit_error": 0.7623831683365709,
+          "normalized_terminal_update_error_indicator": 16.440090803104187,
+          "physical_drift_validation_error": 2.1581985977179374,
+          "validation_error_is_formal_bound": false,
+          "gaussian_moment_closure": true,
+          "moment_closure_error_certified": false,
+          "max_quadratic_covariance_fraction": 0.18886436771796705,
+          "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+          "latent_diffusion_dimension": 1,
+          "physical_state_dimension": 2,
+          "physical_stochastic_state_indices": [
+            1
+          ]
+        },
+        "reverse_surrogate_drift_error_margin": 0.0,
+        "reverse_surrogate_error_covered_by_analytic_envelope": false,
+        "moment_source": "diffusion_reverse_polynomial_covariance_sde",
+        "diffusion_physical_role": "diffusion_only",
+        "nominal_drift_preserved": true,
+        "physical_stochastic_state_indices": [
+          1
+        ],
+        "physical_noise_support_is_known": true,
+        "diffusion_covariance_projected_to_physical_noise_support": true,
+        "sos_center_drift": "exact_nominal_polynomial",
+        "sos_center_refit_error": 0.0,
+        "learned_physical_component": "diffusion_covariance_only",
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_covariance_is_exact": true,
+        "drift_polynomial_is_exact": true,
+        "model_to_real_error_in_generator": false,
+        "statistical_transfer_to_real_system_certified": false,
+        "verification_claim": "formal_certificate_for_fixed_surrogate_model"
+      },
+      "numerical_refinement_applied": false,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07
+    },
+    {
+      "example": "D2",
+      "source_case": "FitzHughNagumo_CDC2025",
+      "method": "diffusion_direct_generator_sos",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 2,
+      "relaxation_degree": 4,
+      "barrier_coefficients": [
+        0.9994843625037483,
+        2.948330246787109e-05,
+        -5.0816718952936484e-09,
+        4.820673103441145e-05,
+        -3.221316677697914e-07,
+        4.080658311747915e-07
+      ],
+      "gram_basis": 6,
+      "multiplier_gram_basis": 3,
+      "estimated_psd_scalar_variables": 132,
+      "estimated_coefficient_equalities": 60,
+      "status": "verified",
+      "solver_status": "optimal",
+      "success": true,
+      "nontrivial": false,
+      "raw_rho": 0.9995937053917064,
+      "reported_rho": 1.0,
+      "safety_lower_bound": 0.0,
+      "solve_time_seconds": 0.2963707000017166,
+      "training_time_seconds": 4.606340499827638,
+      "end_to_end_time_seconds": 4.902711199829355,
+      "sdp_max_constraint_violation": 3.559810822178758e-08,
+      "sdp_min_gram_eigenvalue": -3.4169567481143293e-08,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 7.454511361221075e-07,
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "epsilon_r": 0.0,
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0012260864888968995
+        ]
+      ],
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "abstraction_certificate": {
+        "method": "partitioned_grid_least_squares_with_empirical_envelopes",
+        "error_bound_mode": "validation",
+        "validation_error_margin": 1.25,
+        "box": [
+          [
+            -3.0,
+            3.0
+          ],
+          [
+            -3.0,
+            3.0
+          ]
+        ],
+        "partition_shape": [
+          1,
+          1
+        ],
+        "partition_count": 1,
+        "fit_points": 89,
+        "polynomial_degree": 2,
+        "global_fit_error": 0.0,
+        "max_local_fit_error": 0.0,
+        "max_local_error_bound": 0.0,
+        "extra_error_margin": 0.0,
+        "local_error_bounds_include_extra_margin": true,
+        "analytic_residual_drift_norm_bound": 0.0,
+        "epsilon_r": 0.0,
+        "max_cell_diffusion_eigenvalue": 0.0012260864888968995,
+        "diffusion_bound_mode": "sample",
+        "diffusion_bound_is_global_for_learned_sampler": false,
+        "analytic_diffusion_eigenvalue_bound": 129.64672358141797,
+        "diffusion_confidence_delta": 0.05,
+        "diffusion_sample_count": 32,
+        "diffusion_confidence_factor": null,
+        "diffusion_margin": 1.0,
+        "cell_reports": [
+          {
+            "index": 0,
+            "box": [
+              [
+                -3.0,
+                3.0
+              ],
+              [
+                -3.0,
+                3.0
+              ]
+            ],
+            "fit_points": 71,
+            "validation_points": 18,
+            "fit_error": 0.0,
+            "validation_error": 0.0,
+            "base_error_envelope": 0.0,
+            "extra_error_margin": 0.0,
+            "error_envelope": 0.0,
+            "error_bound_type": "validation",
+            "max_diffusion_eigenvalue": 0.0012260864888968995
+          }
+        ],
+        "note": "Each local polynomial is assessed on a deterministic holdout subset. This is an empirical validation envelope, not a formal neural-network or distributional bound.",
+        "reverse_moment_diagnostics": {
+          "method": "reverse_polynomial",
+          "terminal_sampling_used": false,
+          "polynomial_degree": 2,
+          "fit_node_count": 3,
+          "validation_node_count": 3,
+          "fit_radius": 2.0,
+          "validation_radius": 3.0,
+          "validation_margin": 1.25,
+          "max_step_noise_fit_error": 0.45904669171947354,
+          "mean_step_noise_fit_error": 0.3262596193068269,
+          "normalized_terminal_update_error_indicator": 12.567872949388867,
+          "physical_drift_validation_error": 1.6590085820451066,
+          "validation_error_is_formal_bound": false,
+          "gaussian_moment_closure": true,
+          "moment_closure_error_certified": false,
+          "max_quadratic_covariance_fraction": 0.3406235935175525,
+          "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+          "latent_diffusion_dimension": 1,
+          "physical_state_dimension": 2,
+          "physical_stochastic_state_indices": [
+            1
+          ]
+        },
+        "reverse_surrogate_drift_error_margin": 0.0,
+        "reverse_surrogate_error_covered_by_analytic_envelope": false,
+        "moment_source": "diffusion_reverse_polynomial_covariance_sde",
+        "diffusion_physical_role": "diffusion_only",
+        "nominal_drift_preserved": true,
+        "physical_stochastic_state_indices": [
+          1
+        ],
+        "physical_noise_support_is_known": true,
+        "diffusion_covariance_projected_to_physical_noise_support": true,
+        "sos_center_drift": "exact_nominal_polynomial",
+        "sos_center_refit_error": 0.0,
+        "learned_physical_component": "diffusion_covariance_only",
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_covariance_is_exact": true,
+        "drift_polynomial_is_exact": true,
+        "model_to_real_error_in_generator": false,
+        "statistical_transfer_to_real_system_certified": false,
+        "verification_claim": "formal_certificate_for_fixed_surrogate_model"
+      },
+      "numerical_refinement_applied": false,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07
+    },
+    {
+      "example": "D2",
+      "source_case": "FitzHughNagumo_CDC2025",
+      "method": "diffusion_direct_generator_sos",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 4,
+      "relaxation_degree": 6,
+      "barrier_coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "gram_basis": 10,
+      "multiplier_gram_basis": 6,
+      "estimated_psd_scalar_variables": 388,
+      "estimated_coefficient_equalities": 112,
+      "status": "posterior_check_failed",
+      "solver_status": "solver_error: Solver 'MOSEK' failed. Try another solver, or solve with verbose=True for more information.",
+      "success": false,
+      "nontrivial": false,
+      "raw_rho": 1.0,
+      "reported_rho": 1.0,
+      "safety_lower_bound": 0.0,
+      "solve_time_seconds": 0.4683621001895517,
+      "training_time_seconds": 4.606340499827638,
+      "end_to_end_time_seconds": 5.07470260001719,
+      "sdp_max_constraint_violation": 1e+30,
+      "sdp_min_gram_eigenvalue": -1e+30,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 1.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "epsilon_r": 0.0,
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0012260864888968995
+        ]
+      ],
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "abstraction_certificate": {
+        "method": "partitioned_grid_least_squares_with_empirical_envelopes",
+        "error_bound_mode": "validation",
+        "validation_error_margin": 1.25,
+        "box": [
+          [
+            -3.0,
+            3.0
+          ],
+          [
+            -3.0,
+            3.0
+          ]
+        ],
+        "partition_shape": [
+          1,
+          1
+        ],
+        "partition_count": 1,
+        "fit_points": 89,
+        "polynomial_degree": 2,
+        "global_fit_error": 0.0,
+        "max_local_fit_error": 0.0,
+        "max_local_error_bound": 0.0,
+        "extra_error_margin": 0.0,
+        "local_error_bounds_include_extra_margin": true,
+        "analytic_residual_drift_norm_bound": 0.0,
+        "epsilon_r": 0.0,
+        "max_cell_diffusion_eigenvalue": 0.0012260864888968995,
+        "diffusion_bound_mode": "sample",
+        "diffusion_bound_is_global_for_learned_sampler": false,
+        "analytic_diffusion_eigenvalue_bound": 129.64672358141797,
+        "diffusion_confidence_delta": 0.05,
+        "diffusion_sample_count": 32,
+        "diffusion_confidence_factor": null,
+        "diffusion_margin": 1.0,
+        "cell_reports": [
+          {
+            "index": 0,
+            "box": [
+              [
+                -3.0,
+                3.0
+              ],
+              [
+                -3.0,
+                3.0
+              ]
+            ],
+            "fit_points": 71,
+            "validation_points": 18,
+            "fit_error": 0.0,
+            "validation_error": 0.0,
+            "base_error_envelope": 0.0,
+            "extra_error_margin": 0.0,
+            "error_envelope": 0.0,
+            "error_bound_type": "validation",
+            "max_diffusion_eigenvalue": 0.0012260864888968995
+          }
+        ],
+        "note": "Each local polynomial is assessed on a deterministic holdout subset. This is an empirical validation envelope, not a formal neural-network or distributional bound.",
+        "reverse_moment_diagnostics": {
+          "method": "reverse_polynomial",
+          "terminal_sampling_used": false,
+          "polynomial_degree": 2,
+          "fit_node_count": 3,
+          "validation_node_count": 3,
+          "fit_radius": 2.0,
+          "validation_radius": 3.0,
+          "validation_margin": 1.25,
+          "max_step_noise_fit_error": 0.45904669171947354,
+          "mean_step_noise_fit_error": 0.3262596193068269,
+          "normalized_terminal_update_error_indicator": 12.567872949388867,
+          "physical_drift_validation_error": 1.6590085820451066,
+          "validation_error_is_formal_bound": false,
+          "gaussian_moment_closure": true,
+          "moment_closure_error_certified": false,
+          "max_quadratic_covariance_fraction": 0.3406235935175525,
+          "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+          "latent_diffusion_dimension": 1,
+          "physical_state_dimension": 2,
+          "physical_stochastic_state_indices": [
+            1
+          ]
+        },
+        "reverse_surrogate_drift_error_margin": 0.0,
+        "reverse_surrogate_error_covered_by_analytic_envelope": false,
+        "moment_source": "diffusion_reverse_polynomial_covariance_sde",
+        "diffusion_physical_role": "diffusion_only",
+        "nominal_drift_preserved": true,
+        "physical_stochastic_state_indices": [
+          1
+        ],
+        "physical_noise_support_is_known": true,
+        "diffusion_covariance_projected_to_physical_noise_support": true,
+        "sos_center_drift": "exact_nominal_polynomial",
+        "sos_center_refit_error": 0.0,
+        "learned_physical_component": "diffusion_covariance_only",
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_covariance_is_exact": true,
+        "drift_polynomial_is_exact": true,
+        "model_to_real_error_in_generator": false,
+        "statistical_transfer_to_real_system_certified": false,
+        "verification_claim": "formal_certificate_for_fixed_surrogate_model"
+      },
+      "numerical_refinement_applied": false,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07
+    },
+    {
+      "example": "D2",
+      "source_case": "FitzHughNagumo_CDC2025",
+      "method": "diffusion_direct_generator_sos",
+      "state_dim": 2,
+      "drift_degree": 3,
+      "barrier_degree": 6,
+      "relaxation_degree": 8,
+      "barrier_coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "gram_basis": 15,
+      "multiplier_gram_basis": 10,
+      "estimated_psd_scalar_variables": 920,
+      "estimated_coefficient_equalities": 180,
+      "status": "posterior_check_failed",
+      "solver_status": "solver_error: Solver 'MOSEK' failed. Try another solver, or solve with verbose=True for more information.",
+      "success": false,
+      "nontrivial": false,
+      "raw_rho": 1.0,
+      "reported_rho": 1.0,
+      "safety_lower_bound": 0.0,
+      "solve_time_seconds": 1.2070213998667896,
+      "training_time_seconds": 4.606340499827638,
+      "end_to_end_time_seconds": 5.813361899694428,
+      "sdp_max_constraint_violation": 1e+30,
+      "sdp_min_gram_eigenvalue": -1e+30,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 1.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "barrier_exponents": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          0
+        ]
+      ],
+      "epsilon_r": 0.0,
+      "Gbar": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0012260864888968995
+        ]
+      ],
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "abstraction_certificate": {
+        "method": "partitioned_grid_least_squares_with_empirical_envelopes",
+        "error_bound_mode": "validation",
+        "validation_error_margin": 1.25,
+        "box": [
+          [
+            -3.0,
+            3.0
+          ],
+          [
+            -3.0,
+            3.0
+          ]
+        ],
+        "partition_shape": [
+          1,
+          1
+        ],
+        "partition_count": 1,
+        "fit_points": 89,
+        "polynomial_degree": 2,
+        "global_fit_error": 0.0,
+        "max_local_fit_error": 0.0,
+        "max_local_error_bound": 0.0,
+        "extra_error_margin": 0.0,
+        "local_error_bounds_include_extra_margin": true,
+        "analytic_residual_drift_norm_bound": 0.0,
+        "epsilon_r": 0.0,
+        "max_cell_diffusion_eigenvalue": 0.0012260864888968995,
+        "diffusion_bound_mode": "sample",
+        "diffusion_bound_is_global_for_learned_sampler": false,
+        "analytic_diffusion_eigenvalue_bound": 129.64672358141797,
+        "diffusion_confidence_delta": 0.05,
+        "diffusion_sample_count": 32,
+        "diffusion_confidence_factor": null,
+        "diffusion_margin": 1.0,
+        "cell_reports": [
+          {
+            "index": 0,
+            "box": [
+              [
+                -3.0,
+                3.0
+              ],
+              [
+                -3.0,
+                3.0
+              ]
+            ],
+            "fit_points": 71,
+            "validation_points": 18,
+            "fit_error": 0.0,
+            "validation_error": 0.0,
+            "base_error_envelope": 0.0,
+            "extra_error_margin": 0.0,
+            "error_envelope": 0.0,
+            "error_bound_type": "validation",
+            "max_diffusion_eigenvalue": 0.0012260864888968995
+          }
+        ],
+        "note": "Each local polynomial is assessed on a deterministic holdout subset. This is an empirical validation envelope, not a formal neural-network or distributional bound.",
+        "reverse_moment_diagnostics": {
+          "method": "reverse_polynomial",
+          "terminal_sampling_used": false,
+          "polynomial_degree": 2,
+          "fit_node_count": 3,
+          "validation_node_count": 3,
+          "fit_radius": 2.0,
+          "validation_radius": 3.0,
+          "validation_margin": 1.25,
+          "max_step_noise_fit_error": 0.45904669171947354,
+          "mean_step_noise_fit_error": 0.3262596193068269,
+          "normalized_terminal_update_error_indicator": 12.567872949388867,
+          "physical_drift_validation_error": 1.6590085820451066,
+          "validation_error_is_formal_bound": false,
+          "gaussian_moment_closure": true,
+          "moment_closure_error_certified": false,
+          "max_quadratic_covariance_fraction": 0.3406235935175525,
+          "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+          "latent_diffusion_dimension": 1,
+          "physical_state_dimension": 2,
+          "physical_stochastic_state_indices": [
+            1
+          ]
+        },
+        "reverse_surrogate_drift_error_margin": 0.0,
+        "reverse_surrogate_error_covered_by_analytic_envelope": false,
+        "moment_source": "diffusion_reverse_polynomial_covariance_sde",
+        "diffusion_physical_role": "diffusion_only",
+        "nominal_drift_preserved": true,
+        "physical_stochastic_state_indices": [
+          1
+        ],
+        "physical_noise_support_is_known": true,
+        "diffusion_covariance_projected_to_physical_noise_support": true,
+        "sos_center_drift": "exact_nominal_polynomial",
+        "sos_center_refit_error": 0.0,
+        "learned_physical_component": "diffusion_covariance_only",
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_covariance_is_exact": true,
+        "drift_polynomial_is_exact": true,
+        "model_to_real_error_in_generator": false,
+        "statistical_transfer_to_real_system_certified": false,
+        "verification_claim": "formal_certificate_for_fixed_surrogate_model"
+      },
+      "numerical_refinement_applied": false,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07
+    },
+    {
+      "example": "D3",
+      "source_case": "HybridExample2_mode1",
+      "method": "diffusion_direct_generator_sos",
+      "state_dim": 3,
+      "drift_degree": 2,
+      "barrier_degree": 2,
+      "relaxation_degree": 4,
+      "barrier_coefficients": [
+        0.9999968714572193,
+        -1.541662029261744e-07,
+        -1.7132931638443093e-07,
+        4.047585363235554e-07,
+        1.1224147696465447e-08,
+        -7.3567177968307075e-09,
+        2.0979507125973132e-07,
+        -3.94966574447552e-09,
+        -4.5267252616380895e-09,
+        2.1250950773580143e-07
+      ],
+      "gram_basis": 10,
+      "multiplier_gram_basis": 4,
+      "estimated_psd_scalar_variables": 340,
+      "estimated_coefficient_equalities": 140,
+      "status": "verified",
+      "solver_status": "optimal",
+      "success": true,
+      "nontrivial": false,
+      "raw_rho": 0.999997172373626,
+      "reported_rho": 1.0,
+      "safety_lower_bound": 0.0,
+      "solve_time_seconds": 0.3667556999716908,
+      "training_time_seconds": 1.8741691000759602,
+      "end_to_end_time_seconds": 2.240924800047651,
+      "sdp_max_constraint_violation": 5.1475322130307025e-09,
+      "sdp_min_gram_eigenvalue": -4.688952582890005e-09,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 2.3922379470977575e-07,
+      "barrier_exponents": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          2,
+          0,
+          0
+        ]
+      ],
+      "epsilon_r": 0.0,
+      "Gbar": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.01923730879589428
+        ]
+      ],
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "abstraction_certificate": {
+        "method": "partitioned_grid_least_squares_with_empirical_envelopes",
+        "error_bound_mode": "validation",
+        "validation_error_margin": 1.25,
+        "box": [
+          [
+            -4.0,
+            4.0
+          ],
+          [
+            -4.0,
+            4.0
+          ],
+          [
+            -4.0,
+            4.0
+          ]
+        ],
+        "partition_shape": [
+          1,
+          1,
+          1
+        ],
+        "partition_count": 1,
+        "fit_points": 107,
+        "polynomial_degree": 2,
+        "global_fit_error": 0.0,
+        "max_local_fit_error": 0.0,
+        "max_local_error_bound": 0.0,
+        "extra_error_margin": 0.0,
+        "local_error_bounds_include_extra_margin": true,
+        "analytic_residual_drift_norm_bound": 0.0,
+        "epsilon_r": 0.0,
+        "max_cell_diffusion_eigenvalue": 0.01923730879589428,
+        "diffusion_bound_mode": "sample",
+        "diffusion_bound_is_global_for_learned_sampler": false,
+        "analytic_diffusion_eigenvalue_bound": 182.19998609815323,
+        "diffusion_confidence_delta": 0.05,
+        "diffusion_sample_count": 32,
+        "diffusion_confidence_factor": null,
+        "diffusion_margin": 1.0,
+        "cell_reports": [
+          {
+            "index": 0,
+            "box": [
+              [
+                -4.0,
+                4.0
+              ],
+              [
+                -4.0,
+                4.0
+              ],
+              [
+                -4.0,
+                4.0
+              ]
+            ],
+            "fit_points": 85,
+            "validation_points": 22,
+            "fit_error": 0.0,
+            "validation_error": 0.0,
+            "base_error_envelope": 0.0,
+            "extra_error_margin": 0.0,
+            "error_envelope": 0.0,
+            "error_bound_type": "validation",
+            "max_diffusion_eigenvalue": 0.01923730879589428
+          }
+        ],
+        "note": "Each local polynomial is assessed on a deterministic holdout subset. This is an empirical validation envelope, not a formal neural-network or distributional bound.",
+        "reverse_moment_diagnostics": {
+          "method": "reverse_polynomial",
+          "terminal_sampling_used": false,
+          "polynomial_degree": 2,
+          "fit_node_count": 3,
+          "validation_node_count": 3,
+          "fit_radius": 2.0,
+          "validation_radius": 3.0,
+          "validation_margin": 1.25,
+          "max_step_noise_fit_error": 1.4076827740184252,
+          "mean_step_noise_fit_error": 1.0364735802286484,
+          "normalized_terminal_update_error_indicator": 19.25570436862857,
+          "physical_drift_validation_error": 2.6146375710985836,
+          "validation_error_is_formal_bound": false,
+          "gaussian_moment_closure": true,
+          "moment_closure_error_certified": false,
+          "max_quadratic_covariance_fraction": 0.22159586211002538,
+          "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+          "latent_diffusion_dimension": 1,
+          "physical_state_dimension": 3,
+          "physical_stochastic_state_indices": [
+            2
+          ]
+        },
+        "reverse_surrogate_drift_error_margin": 0.0,
+        "reverse_surrogate_error_covered_by_analytic_envelope": false,
+        "moment_source": "diffusion_reverse_polynomial_covariance_sde",
+        "diffusion_physical_role": "diffusion_only",
+        "nominal_drift_preserved": true,
+        "physical_stochastic_state_indices": [
+          2
+        ],
+        "physical_noise_support_is_known": true,
+        "diffusion_covariance_projected_to_physical_noise_support": true,
+        "sos_center_drift": "exact_nominal_polynomial",
+        "sos_center_refit_error": 0.0,
+        "learned_physical_component": "diffusion_covariance_only",
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_covariance_is_exact": true,
+        "drift_polynomial_is_exact": true,
+        "model_to_real_error_in_generator": false,
+        "statistical_transfer_to_real_system_certified": false,
+        "verification_claim": "formal_certificate_for_fixed_surrogate_model"
+      },
+      "numerical_refinement_applied": false,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07
+    },
+    {
+      "example": "D3",
+      "source_case": "HybridExample2_mode1",
+      "method": "diffusion_direct_generator_sos",
+      "state_dim": 3,
+      "drift_degree": 2,
+      "barrier_degree": 4,
+      "relaxation_degree": 6,
+      "barrier_coefficients": [
+        0.9997036859558358,
+        9.766554673864815e-07,
+        -9.934644761635036e-07,
+        6.3896695945440844e-06,
+        -1.2350762135924505e-05,
+        -2.127000017388986e-05,
+        1.2871724184792899e-05,
+        -2.209626642735578e-05,
+        -4.19590284231386e-06,
+        2.4232097473388052e-05,
+        -1.113120485510918e-05,
+        -1.6125635698068684e-05,
+        -3.4365178909548297e-06,
+        -2.7323353489033394e-06,
+        3.958501208011044e-06,
+        6.33046079304717e-06,
+        7.66969487281656e-06,
+        1.7421021538842178e-06,
+        -2.0838752441267873e-06,
+        7.416684582031476e-06,
+        7.895470605512576e-08,
+        4.315536615479321e-07,
+        -1.557803811317657e-07,
+        -8.178947486839448e-07,
+        1.719153028817008e-06,
+        1.95078461384844e-06,
+        3.1402451703670793e-06,
+        1.8396557306411893e-08,
+        -1.9740288678822286e-07,
+        1.6305827356425847e-06,
+        1.228033437069516e-07,
+        3.6477673421690605e-06,
+        -9.52306237586017e-07,
+        -3.173391130963036e-07,
+        1.8913254367087474e-06
+      ],
+      "gram_basis": 20,
+      "multiplier_gram_basis": 10,
+      "estimated_psd_scalar_variables": 1500,
+      "estimated_coefficient_equalities": 336,
+      "status": "verified",
+      "solver_status": "optimal",
+      "success": true,
+      "nontrivial": false,
+      "raw_rho": 0.9997698704283772,
+      "reported_rho": 1.0,
+      "safety_lower_bound": 0.0,
+      "solve_time_seconds": 2.0690280999988317,
+      "training_time_seconds": 1.8741691000759602,
+      "end_to_end_time_seconds": 3.943197200074792,
+      "sdp_max_constraint_violation": 3.068363753138889e-08,
+      "sdp_min_gram_eigenvalue": -3.012274294312103e-08,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 0.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 5.13647438783344e-07,
+      "barrier_exponents": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          0,
+          3,
+          0
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          2,
+          0,
+          1
+        ],
+        [
+          2,
+          1,
+          0
+        ],
+        [
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          4
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          3,
+          1
+        ],
+        [
+          0,
+          4,
+          0
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          3,
+          0
+        ],
+        [
+          2,
+          0,
+          2
+        ],
+        [
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          0
+        ],
+        [
+          3,
+          0,
+          1
+        ],
+        [
+          3,
+          1,
+          0
+        ],
+        [
+          4,
+          0,
+          0
+        ]
+      ],
+      "epsilon_r": 0.0,
+      "Gbar": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.01923730879589428
+        ]
+      ],
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "abstraction_certificate": {
+        "method": "partitioned_grid_least_squares_with_empirical_envelopes",
+        "error_bound_mode": "validation",
+        "validation_error_margin": 1.25,
+        "box": [
+          [
+            -4.0,
+            4.0
+          ],
+          [
+            -4.0,
+            4.0
+          ],
+          [
+            -4.0,
+            4.0
+          ]
+        ],
+        "partition_shape": [
+          1,
+          1,
+          1
+        ],
+        "partition_count": 1,
+        "fit_points": 107,
+        "polynomial_degree": 2,
+        "global_fit_error": 0.0,
+        "max_local_fit_error": 0.0,
+        "max_local_error_bound": 0.0,
+        "extra_error_margin": 0.0,
+        "local_error_bounds_include_extra_margin": true,
+        "analytic_residual_drift_norm_bound": 0.0,
+        "epsilon_r": 0.0,
+        "max_cell_diffusion_eigenvalue": 0.01923730879589428,
+        "diffusion_bound_mode": "sample",
+        "diffusion_bound_is_global_for_learned_sampler": false,
+        "analytic_diffusion_eigenvalue_bound": 182.19998609815323,
+        "diffusion_confidence_delta": 0.05,
+        "diffusion_sample_count": 32,
+        "diffusion_confidence_factor": null,
+        "diffusion_margin": 1.0,
+        "cell_reports": [
+          {
+            "index": 0,
+            "box": [
+              [
+                -4.0,
+                4.0
+              ],
+              [
+                -4.0,
+                4.0
+              ],
+              [
+                -4.0,
+                4.0
+              ]
+            ],
+            "fit_points": 85,
+            "validation_points": 22,
+            "fit_error": 0.0,
+            "validation_error": 0.0,
+            "base_error_envelope": 0.0,
+            "extra_error_margin": 0.0,
+            "error_envelope": 0.0,
+            "error_bound_type": "validation",
+            "max_diffusion_eigenvalue": 0.01923730879589428
+          }
+        ],
+        "note": "Each local polynomial is assessed on a deterministic holdout subset. This is an empirical validation envelope, not a formal neural-network or distributional bound.",
+        "reverse_moment_diagnostics": {
+          "method": "reverse_polynomial",
+          "terminal_sampling_used": false,
+          "polynomial_degree": 2,
+          "fit_node_count": 3,
+          "validation_node_count": 3,
+          "fit_radius": 2.0,
+          "validation_radius": 3.0,
+          "validation_margin": 1.25,
+          "max_step_noise_fit_error": 1.4076827740184252,
+          "mean_step_noise_fit_error": 1.0364735802286484,
+          "normalized_terminal_update_error_indicator": 19.25570436862857,
+          "physical_drift_validation_error": 2.6146375710985836,
+          "validation_error_is_formal_bound": false,
+          "gaussian_moment_closure": true,
+          "moment_closure_error_certified": false,
+          "max_quadratic_covariance_fraction": 0.22159586211002538,
+          "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+          "latent_diffusion_dimension": 1,
+          "physical_state_dimension": 3,
+          "physical_stochastic_state_indices": [
+            2
+          ]
+        },
+        "reverse_surrogate_drift_error_margin": 0.0,
+        "reverse_surrogate_error_covered_by_analytic_envelope": false,
+        "moment_source": "diffusion_reverse_polynomial_covariance_sde",
+        "diffusion_physical_role": "diffusion_only",
+        "nominal_drift_preserved": true,
+        "physical_stochastic_state_indices": [
+          2
+        ],
+        "physical_noise_support_is_known": true,
+        "diffusion_covariance_projected_to_physical_noise_support": true,
+        "sos_center_drift": "exact_nominal_polynomial",
+        "sos_center_refit_error": 0.0,
+        "learned_physical_component": "diffusion_covariance_only",
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_covariance_is_exact": true,
+        "drift_polynomial_is_exact": true,
+        "model_to_real_error_in_generator": false,
+        "statistical_transfer_to_real_system_certified": false,
+        "verification_claim": "formal_certificate_for_fixed_surrogate_model"
+      },
+      "numerical_refinement_applied": false,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07
+    },
+    {
+      "example": "D3",
+      "source_case": "HybridExample2_mode1",
+      "method": "diffusion_direct_generator_sos",
+      "state_dim": 3,
+      "drift_degree": 2,
+      "barrier_degree": 6,
+      "relaxation_degree": 8,
+      "barrier_coefficients": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "gram_basis": 35,
+      "multiplier_gram_basis": 20,
+      "estimated_psd_scalar_variables": 5040,
+      "estimated_coefficient_equalities": 660,
+      "status": "posterior_check_failed",
+      "solver_status": "solver_error: Solver 'MOSEK' failed. Try another solver, or solve with verbose=True for more information.",
+      "success": false,
+      "nontrivial": false,
+      "raw_rho": 1.0,
+      "reported_rho": 1.0,
+      "safety_lower_bound": 0.0,
+      "solve_time_seconds": 8.390701399883255,
+      "training_time_seconds": 1.8741691000759602,
+      "end_to_end_time_seconds": 10.264870499959216,
+      "sdp_max_constraint_violation": 1e+30,
+      "sdp_min_gram_eigenvalue": -1e+30,
+      "max_initial_violation": 0.0,
+      "max_unsafe_violation": 1.0,
+      "max_positive_violation": 0.0,
+      "max_generator_violation": 0.0,
+      "barrier_exponents": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          0,
+          3,
+          0
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          2,
+          0,
+          1
+        ],
+        [
+          2,
+          1,
+          0
+        ],
+        [
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          4
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          3,
+          1
+        ],
+        [
+          0,
+          4,
+          0
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          3,
+          0
+        ],
+        [
+          2,
+          0,
+          2
+        ],
+        [
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          0
+        ],
+        [
+          3,
+          0,
+          1
+        ],
+        [
+          3,
+          1,
+          0
+        ],
+        [
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          0,
+          4,
+          1
+        ],
+        [
+          0,
+          5,
+          0
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          1,
+          3,
+          1
+        ],
+        [
+          1,
+          4,
+          0
+        ],
+        [
+          2,
+          0,
+          3
+        ],
+        [
+          2,
+          1,
+          2
+        ],
+        [
+          2,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          0
+        ],
+        [
+          3,
+          0,
+          2
+        ],
+        [
+          3,
+          1,
+          1
+        ],
+        [
+          3,
+          2,
+          0
+        ],
+        [
+          4,
+          0,
+          1
+        ],
+        [
+          4,
+          1,
+          0
+        ],
+        [
+          5,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          6
+        ],
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          0,
+          2,
+          4
+        ],
+        [
+          0,
+          3,
+          3
+        ],
+        [
+          0,
+          4,
+          2
+        ],
+        [
+          0,
+          5,
+          1
+        ],
+        [
+          0,
+          6,
+          0
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          1,
+          3,
+          2
+        ],
+        [
+          1,
+          4,
+          1
+        ],
+        [
+          1,
+          5,
+          0
+        ],
+        [
+          2,
+          0,
+          4
+        ],
+        [
+          2,
+          1,
+          3
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          2,
+          4,
+          0
+        ],
+        [
+          3,
+          0,
+          3
+        ],
+        [
+          3,
+          1,
+          2
+        ],
+        [
+          3,
+          2,
+          1
+        ],
+        [
+          3,
+          3,
+          0
+        ],
+        [
+          4,
+          0,
+          2
+        ],
+        [
+          4,
+          1,
+          1
+        ],
+        [
+          4,
+          2,
+          0
+        ],
+        [
+          5,
+          0,
+          1
+        ],
+        [
+          5,
+          1,
+          0
+        ],
+        [
+          6,
+          0,
+          0
+        ]
+      ],
+      "epsilon_r": 0.0,
+      "Gbar": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.01923730879589428
+        ]
+      ],
+      "diffusion_upper_bound_type": "partitioned_verification_box_max_eigenvalue_psd_upper_bound",
+      "abstraction_certificate": {
+        "method": "partitioned_grid_least_squares_with_empirical_envelopes",
+        "error_bound_mode": "validation",
+        "validation_error_margin": 1.25,
+        "box": [
+          [
+            -4.0,
+            4.0
+          ],
+          [
+            -4.0,
+            4.0
+          ],
+          [
+            -4.0,
+            4.0
+          ]
+        ],
+        "partition_shape": [
+          1,
+          1,
+          1
+        ],
+        "partition_count": 1,
+        "fit_points": 107,
+        "polynomial_degree": 2,
+        "global_fit_error": 0.0,
+        "max_local_fit_error": 0.0,
+        "max_local_error_bound": 0.0,
+        "extra_error_margin": 0.0,
+        "local_error_bounds_include_extra_margin": true,
+        "analytic_residual_drift_norm_bound": 0.0,
+        "epsilon_r": 0.0,
+        "max_cell_diffusion_eigenvalue": 0.01923730879589428,
+        "diffusion_bound_mode": "sample",
+        "diffusion_bound_is_global_for_learned_sampler": false,
+        "analytic_diffusion_eigenvalue_bound": 182.19998609815323,
+        "diffusion_confidence_delta": 0.05,
+        "diffusion_sample_count": 32,
+        "diffusion_confidence_factor": null,
+        "diffusion_margin": 1.0,
+        "cell_reports": [
+          {
+            "index": 0,
+            "box": [
+              [
+                -4.0,
+                4.0
+              ],
+              [
+                -4.0,
+                4.0
+              ],
+              [
+                -4.0,
+                4.0
+              ]
+            ],
+            "fit_points": 85,
+            "validation_points": 22,
+            "fit_error": 0.0,
+            "validation_error": 0.0,
+            "base_error_envelope": 0.0,
+            "extra_error_margin": 0.0,
+            "error_envelope": 0.0,
+            "error_bound_type": "validation",
+            "max_diffusion_eigenvalue": 0.01923730879589428
+          }
+        ],
+        "note": "Each local polynomial is assessed on a deterministic holdout subset. This is an empirical validation envelope, not a formal neural-network or distributional bound.",
+        "reverse_moment_diagnostics": {
+          "method": "reverse_polynomial",
+          "terminal_sampling_used": false,
+          "polynomial_degree": 2,
+          "fit_node_count": 3,
+          "validation_node_count": 3,
+          "fit_radius": 2.0,
+          "validation_radius": 3.0,
+          "validation_margin": 1.25,
+          "max_step_noise_fit_error": 1.4076827740184252,
+          "mean_step_noise_fit_error": 1.0364735802286484,
+          "normalized_terminal_update_error_indicator": 19.25570436862857,
+          "physical_drift_validation_error": 2.6146375710985836,
+          "validation_error_is_formal_bound": false,
+          "gaussian_moment_closure": true,
+          "moment_closure_error_certified": false,
+          "max_quadratic_covariance_fraction": 0.22159586211002538,
+          "note": "No terminal residual samples are drawn. The reported validation error is a deterministic-node indicator for the quadratic reverse surrogate, not a global neural-network or Gaussian-closure bound.",
+          "latent_diffusion_dimension": 1,
+          "physical_state_dimension": 3,
+          "physical_stochastic_state_indices": [
+            2
+          ]
+        },
+        "reverse_surrogate_drift_error_margin": 0.0,
+        "reverse_surrogate_error_covered_by_analytic_envelope": false,
+        "moment_source": "diffusion_reverse_polynomial_covariance_sde",
+        "diffusion_physical_role": "diffusion_only",
+        "nominal_drift_preserved": true,
+        "physical_stochastic_state_indices": [
+          2
+        ],
+        "physical_noise_support_is_known": true,
+        "diffusion_covariance_projected_to_physical_noise_support": true,
+        "sos_center_drift": "exact_nominal_polynomial",
+        "sos_center_refit_error": 0.0,
+        "learned_physical_component": "diffusion_covariance_only",
+        "surrogate_error_semantics": "paper_fixed",
+        "diffusion_covariance_is_exact": true,
+        "drift_polynomial_is_exact": true,
+        "model_to_real_error_in_generator": false,
+        "statistical_transfer_to_real_system_certified": false,
+        "verification_claim": "formal_certificate_for_fixed_surrogate_model"
+      },
+      "numerical_refinement_applied": false,
+      "verification_constraint_tolerance": 1e-07,
+      "verification_gram_tolerance": 1e-07
+    }
+  ]
+}

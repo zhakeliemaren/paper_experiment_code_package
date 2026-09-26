@@ -5,7 +5,14 @@ import unittest
 import numpy as np
 
 from diffusion_sbc.polynomial import PolynomialAbstraction
-from paper_benchmarks import PAPER_CASE_IDS, build_system, load_paper_examples, symbolic_drift
+from paper_benchmarks import (
+    DEFAULT_EXTERNAL_BENCHMARK_ROOT,
+    PAPER_CASE_IDS,
+    build_system,
+    load_examples,
+    load_paper_examples,
+    symbolic_drift,
+)
 from paper_pipeline import best_candidate, resolve_stochastic_state_index, verification_center_model
 
 
@@ -13,6 +20,8 @@ class PaperPipelineTests(unittest.TestCase):
     def test_registry_contains_only_manuscript_cases(self) -> None:
         examples = load_paper_examples()
         self.assertEqual(tuple(examples), PAPER_CASE_IDS)
+        self.assertEqual(examples["C2"].source_name, "Duffing_P1")
+        self.assertEqual(examples["C2"].source_citation.split(", Example")[0], "Zhu et al., An Inductive Synthesis Framework for Verifiable Reinforcement Learning, PLDI 2019")
         self.assertEqual(examples["C4"].source_name, "C5")
         self.assertEqual(examples["C6"].source_name, "C12")
         self.assertEqual(examples["C9"].source_name, "R2")
@@ -22,6 +31,16 @@ class PaperPipelineTests(unittest.TestCase):
             polynomials, degree = symbolic_drift(example)
             self.assertEqual(len(polynomials), int(example.n))
             self.assertGreaterEqual(degree, 1)
+
+    def test_external_continuous_adapters_are_polynomial(self) -> None:
+        examples = load_examples(DEFAULT_EXTERNAL_BENCHMARK_ROOT)
+        self.assertEqual(examples["D4"].source_name, "vanderpol1_continuous")
+        self.assertEqual(examples["D5"].source_name, "equil_continuous")
+        for case_id in ("D4", "D5"):
+            polynomials, degree = symbolic_drift(examples[case_id])
+            self.assertEqual(len(polynomials), 2)
+            self.assertGreaterEqual(degree, 2)
+            self.assertTrue(examples[case_id].model_semantics.startswith("continuous-time"))
 
     def test_negative_stochastic_index_selects_last_coordinate(self) -> None:
         self.assertEqual(resolve_stochastic_state_index(7, -1), 6)

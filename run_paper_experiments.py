@@ -14,10 +14,12 @@ from typing import Any
 from paper_benchmarks import (
     DEFAULT_BENCHMARK_ROOT,
     PAPER_CASE_IDS,
+    load_examples,
     load_paper_examples,
     problem_size,
     relaxation_degree,
     symbolic_drift,
+    PAPER_CASE_NAMES,
 )
 from paper_pipeline import (
     RESULT_PROTOCOL,
@@ -77,7 +79,7 @@ The files in this directory are generated from `outputs/paper_experiments/result
 
 - `paper_main_table_rows.tex`: best verified result for each manuscript case.
 - `paper_main_c6_sbc.tex`: selected C6 stochastic barrier polynomial.
-- `paper_main_benchmark_summary.png`: safety lower bounds for C1--C9.
+- `paper_main_benchmark_summary.png`: safety lower bounds for manuscript cases C1--C9.
 - `paper_main_c6_degree_sweep.png`: C6 results at barrier degrees 2, 4, and 6.
 - `run_manifest.json`: runtime versions and experiment selection.
 """
@@ -88,9 +90,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--artifacts", type=Path, default=DEFAULT_ARTIFACTS)
+    parser.add_argument("--benchmark-root", type=Path, default=DEFAULT_BENCHMARK_ROOT)
     parser.add_argument("--examples", nargs="+", default=list(PAPER_CASE_IDS))
     parser.add_argument("--degrees", nargs="+", type=int, default=[2, 4, 6])
-    parser.add_argument("--case-study", default="C6")
+    parser.add_argument("--case-study", default="C6", help="Manuscript case ID (C1--C9); defaults to C6.")
     parser.add_argument("--seed", type=int, default=7)
     parser.add_argument("--data-noise-amplitude", type=float, default=0.03)
     parser.add_argument("--n-trajectories", type=int, default=64)
@@ -152,7 +155,10 @@ def _settings(args: argparse.Namespace, case_ids: list[str], degrees: list[int])
 def main() -> int:
     args = build_parser().parse_args()
     versions = _package_versions()
+    benchmark_root = _project_path(args.benchmark_root)
     examples = load_paper_examples(DEFAULT_BENCHMARK_ROOT)
+    if benchmark_root != DEFAULT_BENCHMARK_ROOT:
+        examples = load_examples(benchmark_root)
 
     if args.smoke:
         case_ids = ["C6"]
@@ -164,7 +170,8 @@ def main() -> int:
         degrees = [int(value) for value in args.degrees]
         output = _project_path(args.output)
         artifacts = _project_path(args.artifacts)
-    unknown = sorted(set(case_ids) - set(PAPER_CASE_IDS))
+    allowed_case_ids = set(examples)
+    unknown = sorted(set(case_ids) - allowed_case_ids)
     if unknown:
         raise ValueError(f"Unknown manuscript cases: {unknown}")
     if len(case_ids) != len(set(case_ids)):
@@ -177,7 +184,9 @@ def main() -> int:
 
     settings = _settings(args, case_ids, degrees)
     print("Paper main-method experiment")
-    print(f"  cases: {', '.join(case_ids)}")
+    print("  cases: " + ", ".join(
+        f"{case_id} ({PAPER_CASE_NAMES.get(case_id, case_id)})" for case_id in case_ids
+    ))
     print(f"  barrier degrees: {', '.join(map(str, degrees))}")
     print(f"  output: {output}")
     if args.dry_run:
@@ -203,7 +212,8 @@ def main() -> int:
         source_case = str(getattr(example, "source_name", case_id))
         nominal_polynomials, drift_degree = symbolic_drift(example)
         print(
-            f"training {case_id} (SynNBC {source_case}, n={example.n})",
+            f"training {case_id} ({PAPER_CASE_NAMES.get(case_id, case_id)}; "
+            f"source {source_case}, n={example.n})",
             flush=True,
         )
         try:
@@ -297,7 +307,7 @@ def main() -> int:
                 "--case",
                 case_study,
                 "--benchmark-root",
-                str(DEFAULT_BENCHMARK_ROOT),
+                str(benchmark_root),
                 "--out",
                 str(artifacts),
             ],

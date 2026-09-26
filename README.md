@@ -1,280 +1,338 @@
 # Diffusion-Induced Probabilistic Safety Verification
 
-This package reproduces the proposed-method experiments reported in the paper.
-It contains the nine manuscript cases, the one-dimensional diffusion model,
-continuous-time Generator-SOS barrier synthesis, posterior numerical checks,
-and the main-result artifact exporter.
+This archive contains the complete implementation used to generate the paper's
+SynNBC experiments. It learns a one-dimensional diffusion disturbance from
+noisy trajectories, constructs a fixed stochastic proxy, synthesizes stochastic
+barrier certificates, and compares the proposed continuous Generator-SOS method
+with two data-Gaussian certificate pipelines.
 
-## Experiment scope
+The archive is self-contained with respect to the benchmark definitions. The
+required SynNBC registry is bundled under `third_party/synncb`; no external
+SynNBC checkout or machine-specific path is needed.
 
-The package uses manuscript identifiers `C1` through `C9`. The source column
-records the corresponding identifier in the SynNBC benchmark repository.
+## Quick start
 
-| Manuscript case | SynNBC source case | State dimension | Drift degree |
-|---|---|---:|---:|
-| C1 | C1 | 2 | 2 |
-| C2 | C2 | 2 | 5 |
-| C3 | C3 | 2 | 2 |
-| C4 | C5 | 2 | 2 |
-| C5 | C8 | 3 | 3 |
-| C6 | C12 | 7 | 2 |
-| C7 | C14 | 9 | 2 |
-| C8 | R1 | 3 | 3 |
-| C9 | R2 | 5 | 3 |
+The reported environment is Windows 11 with Python 3.14.5 and MOSEK 11.2.2.
+Python 3.11 or later is recommended.
 
-The bundled definitions are in
-`third_party/synncb/benchmarks/Exampler_B.py`. They retain the dynamics and
-sets from the source registry while using the manuscript numbering above.
+1. Create and activate a virtual environment.
 
-## Installation
+   ```powershell
+   python -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   ```
 
-The reported environment uses Windows 11 and Python 3.14.5. Python 3.11 or
-later is supported by the package dependencies.
+2. Install all Python dependencies.
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
+   ```powershell
+   python -m pip install --upgrade pip
+   python -m pip install -r requirements.txt
+   ```
 
-MOSEK requires a separate license. The installed solver can be checked with:
+3. Install a valid MOSEK license. The Python package is included in
+   `requirements.txt`, but the license is supplied separately by MOSEK. Verify
+   that CVXPY can see the solver:
 
-```powershell
-python -c "import cvxpy as cp; print(cp.installed_solvers())"
-```
+   ```powershell
+   python -c "import cvxpy as cp; print(cp.installed_solvers())"
+   ```
 
-The output must contain `MOSEK` before the SOS experiments are started.
+   `MOSEK` must appear in the printed list.
 
-## Reproduction commands
+4. Validate the installation with manuscript case C6
+   quadratic smoke experiment.
 
-Validate the package configuration without training or solving:
+   ```powershell
+   python run_paper_experiments.py --smoke
+   ```
 
-```powershell
-python run_paper_experiments.py --dry-run
-```
+5. Run the complete paper experiment.
 
-Run a short C6 degree-2 installation test in `outputs/smoke`:
+   ```powershell
+   python run_paper_experiments.py
+   ```
 
-```powershell
-python run_paper_experiments.py --smoke
-```
+The complete run evaluates the nine manuscript benchmarks C1--C9 with the proposed
+diffusion Generator-SOS method at barrier degrees 2,
+4, and 6. It can take from tens of minutes to several hours depending on the
+CPU, solver version, and the number of resource-limited cases.
 
-Run all nine manuscript cases at barrier degrees 2, 4, and 6:
+## Resume an interrupted run
 
-```powershell
-python run_paper_experiments.py
-```
-
-Resume candidates already recorded under the same protocol identifier:
+The result JSON is updated after each case and degree. Resume from the last
+completed candidate with:
 
 ```powershell
 python run_paper_experiments.py --resume
 ```
 
-Run a subset using manuscript identifiers:
+The resume operation validates the experiment protocol. Results created by an
+older protocol are intentionally rejected; use a new output directory when the
+model or certificate semantics have changed.
+
+## Inspect commands without running solvers
+
+```powershell
+python run_paper_experiments.py --dry-run
+```
+
+The dry run checks installed package versions and the bundled benchmark
+registry, then prints the exact training, verification, and export commands.
+
+## Run a subset
+
+Use manuscript IDs C1--C9 when selecting systems. Their source descriptions are
+listed in the mapping table below:
 
 ```powershell
 python run_paper_experiments.py `
-  --examples C1 C4 C6 `
+  --examples C1 C3 C6 C8 `
   --degrees 2 4 6 `
-  --case-study C6 `
   --output outputs\selected_cases `
   --artifacts paper_artifacts\selected_cases
 ```
 
-`--case-study` must be included in `--examples`. Results produced under a
-changed protocol or parameter set must use a new output directory unless all
-existing candidates in the target directory have been removed.
+The case selected by `--case-study` must also appear in `--examples` because
+the exporter needs one verified case for the case-study figures.
 
-## Method
+## Regenerate an external paper directory
 
-### 1. Exact nominal dynamics
+The archive does not require the LaTeX paper. If a paper checkout is available,
+the same entry point can write directly to its `Figures` directory:
 
-Each source vector field is converted symbolically to polynomial coefficient
-dictionaries.
-
-### 2. Stochastic trajectory generation
-
-Training rollouts use
-
-```text
-x[k+1] = x[k] + dt*f_nom(x[k]) + 0.03*sqrt(dt)*xi[k],
-xi[k] ~ Normal(0, I).
+```powershell
+python run_paper_experiments.py `
+  --resume `
+  --paper-root C:\path\to\paper
 ```
 
-A new independent innovation is drawn at each time step. Domain-clipped
-transitions are excluded because the clipping displacement is a simulator
-artifact. The train/test split is grouped by trajectory.
+Add `--compile-paper` to run `latexmk` after exporting. The paper root must
+contain `AnonymousSubmission2027.tex`, and `latexmk` must be on `PATH`.
 
-### 3. One-dimensional diffusion training
+## What the complete entry point runs
 
-Only the final state coordinate is retained as stochastic during learning and
-verification. The conditional denoising model uses four history steps through
-a statistics context encoder. Increment symmetrization imposes the intended
-zero-mean noise role.
+`run_paper_experiments.py` is the only recommended top-level entry point. It
+performs the following operations in order:
 
-### 4. Reverse-moment construction
+1. Checks required package versions and the bundled benchmark registry.
+2. Loads only the nine manuscript benchmarks (C1--C9), including the external
+   Duffing Example 4.3 used for C2.
+3. Generates shared noisy trajectories for each system.
+4. Rejects transitions affected by domain clipping.
+5. Trains a one-dimensional conditional diffusion model on the final state
+   increment and fits a zero-mean Gaussian to the same accepted increments.
+6. Runs the proposed continuous Generator-SOS certificate for degrees 2, 4,
+   and 6 subject to the declared resource budget.
+7. Applies posterior polynomial, SDP residual, and Gram-eigenvalue checks.
+8. Selects the proposed-method candidate with minimum reported rho.
+9. Exports JSON, CSV, Markdown, LaTeX fragments, and paper-ready figures.
+10. Writes a run manifest containing the exact package versions.
 
-The 32-step reverse chain is represented by quadratic reverse-update
-surrogates. Gaussian moments are propagated deterministically through the
-complete chain. The resulting terminal covariance is converted to the
-rank-one physical covariance rate
+## Experimental protocol
+
+### Data generation
+
+For every benchmark, the simulator uses
+
+```text
+x[k+1] = x[k] + dt*f_nom(x[k]) + 0.03*sqrt(dt)*xi[k]
+xi[k] ~ Normal(0, I)
+```
+
+with `dt=0.05`, 64 requested trajectories, horizon 40, and seed 7. A fresh
+innovation is drawn at every physical time step. The value `0.03` is used only
+to generate trajectories; it is not inserted directly into either learned
+verification model.
+
+Transitions that leave the verification box or touch a clipping boundary are
+removed. The train/test split is grouped by trajectory so adjacent transitions
+from one rollout cannot appear on both sides.
+
+### One-dimensional diffusion proxy
+
+Only the final physical coordinate is retained as stochastic. The conditional
+diffusion model uses a 32-step cosine schedule, eight noisy copies per training
+increment, hidden widths `(64, 64)`, batch size 256, and learning rate
+`5e-4`. Symmetric increments suppress an additional learned drift term, so the
+exact benchmark drift is preserved.
+
+Quadratic reverse-polynomial moment propagation maps the complete learned
+reverse chain to a rank-one covariance rate
 
 ```text
 G_diff = lambda_diff * e_j * e_j^T.
 ```
 
-The fixed verification proxy is
+The proposed method verifies the fixed proxy
 
 ```text
-dX = f_nom(X) dt + sqrt(lambda_diff) * e_j dW.
+dX = f_nom(X) dt + sqrt(lambda_diff) e_j dW.
 ```
 
-The learned terminal mean is not added to the nominal drift.
+### Data-Gaussian proxy
 
-### 5. Generator-SOS barrier synthesis
-
-For each requested barrier degree, all coefficients of `B` and `rho` are
-optimized under
+The comparison covariance is estimated from the same retained final-coordinate
+increments:
 
 ```text
-B(x) >= 0                                      on Psi,
-B(x) <= rho                                    on Theta,
-B(x) >= 1                                      on Xi,
-grad(B)^T f_nom + 0.5*Tr(G_diff Hess(B)) <= 0  on Psi.
+lambda_G = sum_i residual_i^2 / (N*dt).
 ```
 
-Putinar SOS multipliers encode the box constraints. Initial conditions use
-pointwise worst-case semantics. The safety lower bound is `1 - rho`.
+The Gaussian model is therefore data-fitted rather than fixed to the trajectory
+generator's `0.03` amplitude.
 
-### 6. Posterior checks and selection
+### Certificate methods
 
-Each solver candidate is checked using polynomial samples, coefficient
-identity residuals, and Gram-matrix eigenvalues. A candidate that fails a
-posterior check is reported with safety lower bound zero. A common `1e-3`
-reporting allowance is added to accepted raw `rho` values. For each case, the
-accepted candidate with minimum reported `rho` is selected; certificate time
-breaks ties.
+The paper compares the following method keys. The default entry point in this
+archive recomputes the proposed method; archived comparison results use the
+same keys and display names:
 
-## Active experiment parameters
+- `diffusion_direct_generator_sos`: continuous-time stochastic generator SOS
+  on the learned diffusion proxy.
+- `gaussian_neural_rsm_bernstein`: polynomial neural/RSM candidates with an
+  independent Bernstein one-step verifier on the data-Gaussian proxy.
+- `gaussian_c_sbc_multi_candidate_sos` (display name **DiffSBC**): a bank of
+  polynomial candidates with discrete expectation SOS verification on the same
+  Gaussian proxy.
 
-### Data generation
+For the proposed method, the optimized conditions are
 
-| Parameter | Value |
-|---|---:|
-| Random seed | 7 |
-| NumPy bit generator | PCG64 through `default_rng` |
-| Time step | 0.05 |
-| Trajectories per case | 64 |
-| Steps per trajectory | 40 |
-| Data-generation noise amplitude | 0.03 |
-| History length | 4 |
-| Train/test split | 80/20 by trajectory |
-| Learned stochastic coordinate | final coordinate |
-| Learned stochastic dimension | 1 |
+```text
+B(x) >= 0                on the verification domain
+B(x) <= rho              on the initial set
+B(x) >= 1                on the unsafe set
+grad(B)^T f + 0.5 Tr(G Hess(B)) <= 0 on the domain
+```
 
-### Diffusion model
+All paper results use pointwise worst-case initial semantics. The reported
+lower bound is `1-rho`. Successful candidates receive a common reporting
+allowance of `1e-3` on raw rho. The SynNBC C5 source case (manuscript case C4) receives the explicitly
+declared `2e-6` numerical refinement only at barrier degree 6.
 
-| Parameter | Value |
-|---|---:|
-| Schedule | cosine |
-| Reverse steps | 32 |
-| Terminal cumulative signal target | at most 0.003 |
-| Training copies per increment | 8 |
-| Hidden widths | 64, 64 |
-| Activation | tanh |
-| Optimizer | Adam |
-| L2 coefficient | 1e-4 |
-| Batch size | 256 |
-| Learning rate | 5e-4 |
-| Maximum iterations | 300 |
-| Early-stopping patience | 15 |
-| Increment symmetrization | enabled |
-| Reverse surrogate degree | 2 |
-| Reverse-moment conditions | 32 |
-| Polynomial abstraction conditions | 80 |
-| Spatial partitions | 1 |
-| Validation grid count | 2 |
+### Error semantics
 
-### Barrier synthesis
+The paper experiment uses `paper-fixed` surrogate semantics. The learned
+covariance is treated as an exact parameter of a fixed proxy SDE. Terminal PAC
+inflation, reverse-surrogate error, covariance transfer error, and finite-probe
+coverage error are not added to the certificate constraints.
 
-| Parameter | Value |
-|---|---:|
-| Barrier degrees | 2, 4, 6 |
-| Initial semantics | worst case |
-| Objective | minimize rho |
-| rho upper bound | 1 |
-| SOS margin | 1e-6 |
-| SOS regularization | 1e-7 |
-| Sample tolerance | 1e-3 |
-| Coefficient tolerance | 1e-7 |
-| Gram eigenvalue tolerance | 1e-7 |
-| Maximum estimated PSD scalars | 12000 |
-| Reporting allowance | 1e-3 |
-| C4 degree-6 refinement tolerance | 2e-6 |
+The resulting certificate is formal for the fixed proxy used by its verifier.
+It is not a distribution-free certificate for every unknown physical process
+consistent with the finite training set. See
+`docs/dips_bc_error_handling_comparison.md` for the detailed scope.
 
-All configurations are run once with seed 7. The degree sweep is a model
-selection scan, not an independent statistical repetition. Reported times are
-wall-clock measurements and vary with hardware, solver version, and system
-load. No confidence interval or statistical significance test is claimed for
-single-run wall-clock values.
+## Output layout
 
-## Code structure
-
-| Path | Responsibility |
-|---|---|
-| `run_paper_experiments.py` | Main command, case scheduling, resume logic, and manifests |
-| `paper_benchmarks.py` | Nine-case registry loader and exact polynomial system adapter |
-| `paper_pipeline.py` | Diffusion training, fixed-surrogate construction, SOS solving, and result serialization |
-| `export_paper_artifacts.py` | Main-result LaTeX fragments and figures |
-| `diffusion_sbc/context.py` | History context encoding |
-| `diffusion_sbc/diffusion.py` | Conditional denoising model |
-| `diffusion_sbc/score_dynamics.py` | Reverse-polynomial moment propagation |
-| `diffusion_sbc/pipeline.py` | Training and model artifact construction |
-| `diffusion_sbc/barrier.py` | Continuous-time stochastic barrier synthesis |
-| `diffusion_sbc/sos.py` | Polynomial and SOS utilities |
-| `third_party/synncb/benchmarks/Exampler_B.py` | Nine benchmark definitions |
-
-## Outputs
-
-The complete run writes:
+The default numerical output is `outputs/paper_experiments`:
 
 ```text
 outputs/paper_experiments/
   results.json
   candidate_results.csv
   minimum_rho_summary.md
-  C1/ ... C9/
-
-paper_artifacts/
-  paper_main_table_rows.tex
-  paper_main_c6_sbc.tex
-  paper_main_benchmark_summary.png
-  paper_main_c6_degree_sweep.png
-  run_manifest.json
+  C1/
+    diffusion_training/
+    gaussian_transition_abstractions/
+  ...
 ```
 
-`results.json` is the authoritative numerical record. `candidate_results.csv`
-contains every attempted degree. `minimum_rho_summary.md` contains one selected
-main-method result per manuscript case.
+`results.json` is authoritative. The CSV and Markdown files are derived views.
+Each case directory contains the data split, model configuration, training
+summary, fitted model objects, and per-degree Gaussian transition abstractions.
 
-## Verification scope
-
-The SOS inequalities are global over the stated semialgebraic sets for the
-fixed learned surrogate and the recorded numerical tolerances. The paper-fixed
-protocol does not provide a statistical transfer theorem from finite training
-data to the unknown real disturbance law. The generated safety lower bound
-therefore applies to the fixed learned stochastic proxy used by the
-Generator-SOS program.
-
-## Benchmark attribution
-
-The benchmark dynamics are selected from the SynNBC repository:
+The default paper output is `paper_artifacts`:
 
 ```text
-https://github.com/tete0602/SynNBC
+paper_artifacts/
+  README.md
+  run_manifest.json
+  selected_nine_case_results.md
+  selected_nine_case_results.csv
+  paper_main_table_rows.tex
+  paper_main_c6_sbc.tex
+  paper_main_c6_degree_sweep.png
+  paper_main_benchmark_summary.png
 ```
 
-The bundled registry is limited to the nine cases required to reproduce the
-paper table.
+## Manuscript case mapping
+
+The manuscript renumbers nine selected source systems:
+
+| Manuscript case | Benchmark description | Source | Registry ID |
+|---|---|---|---|---:|
+| C1 | 2D quadratic Arch system | SynNBC C1 | 4 |
+| C2 | 2D controlled Duffing Example 4.3 | Zhu et al. PLDI 2019 | -- |
+| C3 | 2D quadratic oscillatory system | SynNBC C3 | 7 |
+| C4 | 2D quadratic Van der Pol variant | SynNBC C5 | 9 |
+| C5 | 3D cubic Van der Pol variant | SynNBC C8 | 5 |
+| C6 | 7D quadratic Lie-derivative system | SynNBC C12 | 12 |
+| C7 | 9D quadratic equilibrium system | SynNBC C14 | 13 |
+| C8 | 3D cubic Lyapunov system | SynNBC R1 | 23 |
+| C9 | 5D cubic Lotka system | SynNBC R2 | 24 |
+
+Generated result files use C1--C9 in tables and figures and retain source IDs
+in metadata for reproducibility.
+
+## Source layout
+
+- `bobo_aaai/`: reusable data, diffusion, polynomial, SOS, and baseline code.
+- `run_paper_experiments.py`: complete archive-level paper experiment entry.
+- `run_synncb_certificate_methods.py`: method/degree scheduler and result writer.
+- `run_synncb_diffusion_ablation.py`: shared diffusion and Gaussian fitting.
+- `run_synncb_table3.py`: benchmark adapter and exact polynomial drift loader.
+- `export_synncb_certificate_method_study.py`: table and figure exporter.
+- `third_party/synncb/`: bundled benchmark registry.
+- `tests/`: unit and regression tests.
+- `docs/`: model assumptions, error semantics, and legacy experiment notes.
+- `outputs/`: retained historical and generated numerical results.
+
+Legacy scripts are kept for earlier CARLA, CDC 2004, discrete-transition, and
+constant-noise experiments. They are not called by the current paper entry
+point.
+
+## Tests
+
+Run all tests with the standard library test runner:
+
+```powershell
+python -m unittest discover -s tests -p "test_*.py"
+```
+
+The test suite covers benchmark loading, dataset grouping, diffusion moments,
+Gaussian fitting, continuous and discrete barrier formulations, paper exports,
+and the three certificate-method registrations.
+
+## Reproducibility notes
+
+- Solver times depend on hardware, MOSEK version, and system load.
+- Boundary SDP residuals can move slightly across BLAS and solver versions.
+- Random seed 7 controls trajectory and training sampling, but numerical solver
+  ordering can still produce small coefficient differences.
+- Resource-limited status means the declared pre-solve budget was exceeded; it
+  does not prove that no certificate exists.
+- A zero safety lower bound can be a verified but trivial certificate with
+  reported rho equal to 1.
+- Never edit paper numbers manually. Regenerate tables from `results.json`.
+
+## Troubleshooting
+
+### MOSEK is installed but solving fails
+
+Confirm that the license is valid and visible to the current user. A package
+installation alone does not include a license.
+
+### A resume run reports a protocol mismatch
+
+Use a new output directory. Resume is intentionally limited to results created
+by exactly the same protocol version.
+
+### A case reports `training_data_unavailable`
+
+Too few unclipped transitions remained under the common data protocol. This is
+reported consistently for all methods in that case.
+
+### Paper figures cannot open a transition abstraction
+
+Run the exporter through `run_paper_experiments.py`. New results store model
+paths relative to the result root so the entire directory can be moved after
+unpacking.

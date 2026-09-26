@@ -1,0 +1,97 @@
+{
+  "solver_backend": "sample",
+  "solver_status": "Maximum number of iterations has been exceeded.",
+  "certificate_method": "prajna2004_rho_optimization",
+  "verification_level": "sampled_constraints_not_formal",
+  "drift_fit_error": 0.0,
+  "abstraction_error_bound": 0.0,
+  "abstraction_error_mode": "off",
+  "rho": 0.8000716061734288,
+  "risk_bound": 0.8000716061734288,
+  "gamma": 0.8000716061734288,
+  "formulation": "prajna_optimization",
+  "initial_condition_mode": "worst_case",
+  "initial_distribution": null,
+  "initial_barrier_statistic": 0.8084049395067621,
+  "dynamics_semantics": "continuous_time_generator",
+  "transition_expectation_error_bound": 0.0,
+  "transition_sample_count": 0,
+  "epsilon": 0.8000716061734288,
+  "generator_c": 0.0,
+  "time_horizon": 0.0,
+  "diffusion_generator_error_bound": 0.0,
+  "sdp_max_constraint_violation": 0.0,
+  "sdp_min_gram_eigenvalue": 0.0,
+  "safety_probability_lower_bound": 0.0,
+  "objective": 2.1079781161056155,
+  "success": false,
+  "coeffs": [
+    0.7824049251629952,
+    -0.18116453813476788,
+    0.011327344040341435,
+    0.09572781227333714,
+    0.009836900794355355,
+    -0.036543403615553964,
+    0.02978781306236688,
+    -0.0090029656234308,
+    0.008478625647378543,
+    0.04594562295489277
+  ],
+  "exponents": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      2
+    ],
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      2,
+      0
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      2,
+      0,
+      0
+    ]
+  ],
+  "max_initial_violation": 0.008333333333333304,
+  "max_unsafe_violation": 0.10125880327804515,
+  "max_positive_violation": 0.0,
+  "max_generator_violation": 1.2507198904742722,
+  "n_counterexamples": 0
+}
